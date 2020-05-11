@@ -6,7 +6,9 @@
     "lib": [
       "esnext",
       "esnext.asynciterable",
-      "dom"
+      "dom",
+      "dom.iterable",
+      "scripthost"
     ],
     "esModuleInterop": true,
     "allowJs": true,

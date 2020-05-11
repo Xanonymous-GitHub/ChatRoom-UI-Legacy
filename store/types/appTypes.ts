@@ -1,5 +1,7 @@
+export interface RootState {}
+
 export enum themeModes{
-  AUTO,
-  LIGHT,
-  DARK,
+  AUTO='AUTO',
+  LIGHT='LIGHT',
+  DARK='DARK',
 }

@@ -85,5 +85,6 @@ module.exports = {
     typeCheck: {
       eslint: true
     }
-  }
+  },
+  store: true
 }

@@ -1,27 +1,16 @@
-import { getterTree, mutationTree, actionTree } from 'nuxt-typed-vuex'
+import { Module, Mutation, VuexModule } from 'vuex-module-decorators'
 import { themeModes } from '~/store/types/appTypes'
-const state = () => ({
-  themeMode: themeModes
-})
 
-const getters = getterTree(state, {
+@Module({ name: 'app', namespaced: true, stateFactory: true })
+export default class AppStore extends VuexModule {
+  private themeMode = themeModes.AUTO;
 
-})
-
-const mutations = mutationTree(state, {
-
-})
-
-const actions = actionTree(
-  { state, getters, mutations },
-  {
-
+  @Mutation
+  SET_THEME_MODE (mode: themeModes) {
+    this.themeMode = mode
   }
-)
 
-export default {
-  state,
-  getters,
-  mutations,
-  actions
+  get isDarkMode () {
+    return this.themeMode === themeModes.DARK
+  }
 }
