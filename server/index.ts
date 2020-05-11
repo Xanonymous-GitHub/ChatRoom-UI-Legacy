@@ -26,7 +26,7 @@ async function start () {
   fastify.use(nuxt.render)
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  fastify.listen(port, host, (err, address) => {
+  fastify.listen(port, host, (err:any) => {
     if (err) {
       fastify.log.error(err)
       process.exit(1)

@@ -36,7 +36,8 @@ module.exports = {
   */
   buildModules: [
     '@nuxt/typescript-build',
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    'nuxt-typed-vuex'
   ],
   /*
   ** Nuxt.js modules
@@ -76,12 +77,9 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    /*
-    ** You can extend webpack config here
-    */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    extend (config, ctx) {
-    }
+    transpile: [
+      /typed-vuex/
+    ]
   },
   typescript: {
     typeCheck: {
