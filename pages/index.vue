@@ -34,8 +34,9 @@ export default class RootPage extends Vue {
   }
 
   public mounted () {
-    console.log(appStore)
+    console.log(appStore.SET_THEME_MODE(RootPage.detectTheme()))
     console.log(RootPage.detectTheme())
+    console.log(appStore.isDarkMode)
   }
 }
 </script>
