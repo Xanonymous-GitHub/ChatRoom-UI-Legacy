@@ -28,8 +28,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [
-  ],
+  plugins: [],
   /*
   ** Nuxt.js dev-modules
   */
@@ -49,45 +48,61 @@ module.exports = {
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
-  axios: {
-  },
+  axios: {},
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module
   */
   vuetify: {
-    customVariables: ['~/assets/scss/shared/variables.scss']
-    // theme: {
-    //   dark: true,
-    //   themes: {
-    //     dark: {
-    //       primary: colors.blue.darken2,
-    //       accent: colors.grey.darken3,
-    //       secondary: colors.amber.darken3,
-    //       info: colors.teal.lighten1,
-    //       warning: colors.amber.base,
-    //       error: colors.deepOrange.accent4,
-    //       success: colors.green.accent3
-    //     }
-    //   }
-    // }
-  },
-  /*
-  ** Build configuration
-  */
-  build: {
-    extractCSS: true,
-    transpile: [
-      /typed-vuex/
-    ]
-  },
-  typescript: {
-    typeCheck: {
-      eslint: true
+    customVariables: ['~/assets/scss/shared/variables.scss'],
+    theme: {
+      dark: false,
+      default: 'light',
+      disable: false,
+      options: {
+        cspNonce: undefined,
+        customProperties: undefined,
+        minifyTheme: undefined,
+        themeCache: undefined
+      },
+      themes: {
+        light: {
+          primary: '#1976D2',
+          secondary: '#424242',
+          accent: '#82B1FF',
+          error: '#FF5252',
+          info: '#2196F3',
+          success: '#4CAF50',
+          warning: '#FB8C00'
+        },
+        dark: {
+          primary: '#2196F3',
+          secondary: '#424242',
+          accent: '#FF4081',
+          error: '#FF5252',
+          info: '#2196F3',
+          success: '#4CAF50',
+          warning: '#FB8C00'
+        }
+      }
+    },
+    /*
+    ** Build configuration
+    */
+    build: {
+      extractCSS: true,
+      transpile: [
+        /typed-vuex/
+      ]
+    },
+    typescript: {
+      typeCheck: {
+        eslint: true
+      }
+    },
+    store: true,
+    styleResources: {
+      scss: '@/assets/app.scss'
     }
-  },
-  store: true,
-  styleResources: {
-    scss: '@/assets/app.scss'
   }
 }

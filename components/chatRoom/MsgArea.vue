@@ -3,12 +3,20 @@
     id="MsgArea"
     :class="{ darkBackground: isDarkMode }"
     class="full-height"
-  />
+  >
+    <Msg :is-dark-mode="isDarkMode" :text-content="'123123123123123123123123123123123123123123123123123123123123'" />
+  </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-@Component
+import Msg from '~/components/chatRoom/Msg.vue'
+
+@Component({
+  components: {
+    Msg
+  }
+})
 export default class MsgArea extends Vue {
     @Prop({ required: false })
     private isDarkMode!: boolean;
