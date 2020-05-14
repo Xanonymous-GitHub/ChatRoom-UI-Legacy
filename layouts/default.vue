@@ -22,7 +22,7 @@ export default class DefaultLayout extends Vue {
     return colorSchema
   }
 
-  private static detectTheme ():themeModes {
+  private static detectTheme (): themeModes {
     let theme: themeModes
     const localStorageTheme = DefaultLayout.detectLocalStorageTheme()
     if (localStorageTheme === themeModes.AUTO) {

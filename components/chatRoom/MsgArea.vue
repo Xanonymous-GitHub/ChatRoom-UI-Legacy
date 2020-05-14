@@ -4,7 +4,37 @@
     :class="{ darkBackground: isDarkMode }"
     class="full-height"
   >
-    <Msg :is-dark-mode="isDarkMode" :send-by-self="true" :text-content="'123123sdasdasdassfsdfsdfsdfsdsgpodkgposdkposkdpgoskpgoskdpoksdpgokspdogk123123123123123123123123123123123123123123123123123123'" />
+    <Msg
+      :is-dark-mode="isDarkMode"
+      :send-by-self="false"
+      :text-content="'Build your next Vue.js application with confidence using NuxtJS. An open source framework making web development simple and powerful.'"
+      :read-able="true"
+      :sent-time="'13:43am'"
+    />
+
+    <Msg
+      :is-dark-mode="isDarkMode"
+      :send-by-self="true"
+      :text-content="'Versatile by nature, it supports different targets (server, serverless or static) and server side rendering is switchable.'"
+      :read-able="true"
+      :sent-time="'13:45am'"
+    />
+
+    <Msg
+      :is-dark-mode="isDarkMode"
+      :send-by-self="false"
+      :text-content="'Sounds great~~XD!'"
+      :read-able="true"
+      :sent-time="'13:49am'"
+    />
+
+    <Msg
+      :is-dark-mode="isDarkMode"
+      :send-by-self="true"
+      :text-content="'You can say that again!'"
+      :read-able="false"
+      :sent-time="'13:59am'"
+    />
   </div>
 </template>
 

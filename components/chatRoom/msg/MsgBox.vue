@@ -1,12 +1,13 @@
 <template>
   <v-card
     id="msg-box"
-    class="mt-5 mr-3 ml-1"
+    class="mt-5"
+    :class="{from_other_color:!sentBySelf}"
     :dark="isDarkMode"
     hover
     round
   >
-    <v-card-text>
+    <v-card-text class="py-2">
       {{ textContent.toString().trim() }}
     </v-card-text>
   </v-card>
@@ -22,5 +23,8 @@ export default class MsgBox extends Vue {
 
   @Prop({ required: true })
   private textContent!:string;
+
+  @Prop({ required: true })
+  private sentBySelf!:boolean;
 }
 </script>

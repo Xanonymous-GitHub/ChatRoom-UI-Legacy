@@ -3,4 +3,7 @@
   border-radius: 3vh;
   font-weight: bolder;
   max-width: min(500px, 70%);
+  &.from_other_color{
+    background-color: #0779e4;
+  }
 }
