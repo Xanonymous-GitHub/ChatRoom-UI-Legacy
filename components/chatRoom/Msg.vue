@@ -1,5 +1,5 @@
 <template>
-  <MsgBox :is-dark-mode="isDarkMode" :text-content="textContent" />
+  <MsgBox :is-dark-mode="isDarkMode" :text-content="textContent" :send-by-self="sendBySelf" />
 </template>
 
 <script lang="ts">
@@ -17,5 +17,8 @@ export default class Msg extends Vue {
 
   @Prop({ required: true })
   private textContent!:string;
+
+  @Prop({ required: true })
+  private sendBySelf!:boolean
 }
 </script>

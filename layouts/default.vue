@@ -6,6 +6,7 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import { themeModes } from '~/store/types/appTypes'
 import { appStore } from '~/utils/store-accessor'
+
 @Component
 export default class DefaultLayout extends Vue {
   private static detectSystemTheme (): themeModes {
