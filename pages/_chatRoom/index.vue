@@ -35,7 +35,11 @@ export default class ChatRoom extends Vue {
     }
 
     public mounted () {
-      this.setMsgAreaHeight()
+      this.setMsgAreaHeight(this.calculateMsgAreaHeight(), 'px')
+      window.addEventListener('resize', () => {
+        this.setMsgAreaHeight(100, '%')
+        setTimeout(() => this.setMsgAreaHeight(this.calculateMsgAreaHeight(), 'px'), 1)
+      })
     }
 
     private calculateMsgAreaHeight () {
@@ -45,16 +49,16 @@ export default class ChatRoom extends Vue {
       ]
       return (
         (msgArea.$el?.clientHeight as number) -
-        (bottomController.$el?.clientHeight as number)
+        (bottomController.$el?.clientHeight as number) + 1
       )
     }
 
-    private setMsgAreaHeight () {
+    private setMsgAreaHeight (height:number, unit:string) {
       const msgArea = this.$refs.msgArea as RefElement
       // eslint-disable-next-line no-unused-expressions
       msgArea.$el?.setAttribute(
         'style',
-        `height:${this.calculateMsgAreaHeight()}px`
+        `height:${height}${unit}`
       )
     }
 }
