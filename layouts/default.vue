@@ -1,5 +1,5 @@
 <template>
-  <nuxt id="app" class="font-fans" />
+  <nuxt id="app" class="font-medium" />
 </template>
 
 <script lang="ts">
