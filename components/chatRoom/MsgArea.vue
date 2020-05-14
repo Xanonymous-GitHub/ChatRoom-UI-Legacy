@@ -4,7 +4,7 @@
     :class="{ darkBackground: isDarkMode }"
     class="full-height"
   >
-    <Msg :is-dark-mode="isDarkMode" :send-by-self="false" :text-content="'123123sdasdasdassfsdfsdfsdfsdsgpodkgposdkposkdpgoskpgoskdpoksdpgokspdogk123123123123123123123123123123123123123123123123123123'" />
+    <Msg :is-dark-mode="isDarkMode" :send-by-self="true" :text-content="'123123sdasdasdassfsdfsdfsdfsdsgpodkgposdkposkdpgoskpgoskdpoksdpgokspdogk123123123123123123123123123123123123123123123123123123'" />
   </div>
 </template>
 

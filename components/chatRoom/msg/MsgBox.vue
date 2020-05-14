@@ -1,8 +1,7 @@
 <template>
   <v-card
     id="msg-box"
-    class="my-5 mx-3"
-    :class="{sent_by_self:sendBySelf}"
+    class="mt-5 mr-3 ml-1"
     :dark="isDarkMode"
     hover
     round
@@ -23,8 +22,5 @@ export default class MsgBox extends Vue {
 
   @Prop({ required: true })
   private textContent!:string;
-
-  @Prop({ required: true })
-  private sendBySelf!:boolean
 }
 </script>

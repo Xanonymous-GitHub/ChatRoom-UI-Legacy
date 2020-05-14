@@ -1,5 +1,14 @@
-.sent_by_self{
-  right: 0;
-  float: right;
-  clear: right;
+//.sent_by_self{
+//  right: 0;
+//  float: right;
+//  clear: right;
+//}
+
+#msg{
+  display: flex;
+  align-items: flex-end;
+
+  &.sent_by_self{
+    flex-direction: row-reverse;
+  }
 }
