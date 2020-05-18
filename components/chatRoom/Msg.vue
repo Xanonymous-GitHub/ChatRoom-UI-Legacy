@@ -1,8 +1,8 @@
 <template>
-  <div id="msg" :class="{sent_by_self:sendBySelf}" class="pr-2">
+  <div id="msg" :class="{sent_by_self:sendBySelf}" class="pr-2 mb-1">
     <Avatar v-if="!sendBySelf" />
-    <MsgBox :sent-by-self="sendBySelf" :is-dark-mode="isDarkMode" :text-content="textContent" />
-    <MsgStatus :read-able="readAble" :sent-time="sentTime" />
+    <MsgBox :sent-by-self="sendBySelf" :text-content="textContent"/>
+    <MsgStatus :sent-by-self="sendBySelf" :read-able="readAble" :sent-time="sentTime" />
   </div>
 </template>
 

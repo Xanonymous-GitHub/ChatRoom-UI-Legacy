@@ -1,11 +1,11 @@
 <template>
-  <div class="msg-box">
-    <v-card-text v-if="readAble" class="msg-box-status px-0 py-0 mb-0 mx-2">
+  <div class="msg-status">
+    <p v-if="readAble&&sentBySelf" class="msg-status-text px-0 py-0 mb-0 mx-2">
       read
-    </v-card-text>
-    <v-card-text class="msg-box-status px-0 py-0 mb-0 mx-2">
+    </p>
+    <p class="msg-status-text px-0 py-0 mb-0 mx-2">
       {{ sentTime }}
-    </v-card-text>
+    </p>
   </div>
 </template>
 
@@ -19,5 +19,8 @@ export default class MsgStatus extends Vue {
 
   @Prop({ required: true })
   private readAble!: boolean;
+
+  @Prop({ required: true })
+  private sentBySelf!:boolean;
 }
 </script>

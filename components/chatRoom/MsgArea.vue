@@ -32,7 +32,7 @@
       :is-dark-mode="isDarkMode"
       :send-by-self="true"
       :text-content="'You can say that again!'"
-      :read-able="false"
+      :read-able="true"
       :sent-time="'13:59am'"
     />
   </div>

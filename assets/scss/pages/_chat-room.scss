@@ -1,8 +1,9 @@
-#chat-room{
-  & .bottom{
+#chat-room {
+  & .bottom {
     bottom: 0;
   }
-  & .fixed{
+
+  & .fixed {
     position: fixed;
   }
 }

@@ -3,8 +3,8 @@
     id="msg-box"
     class="mt-5"
     :class="{from_other_color:!sentBySelf}"
-    :dark="isDarkMode"
     hover
+    dark
     round
   >
     <v-card-text class="py-2">
@@ -18,9 +18,6 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 
 @Component({})
 export default class MsgBox extends Vue {
-  @Prop({ required: false })
-  private isDarkMode!: boolean;
-
   @Prop({ required: true })
   private textContent!:string;
 

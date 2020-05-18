@@ -1,9 +1,13 @@
-#msg-box{
+#msg-box {
   width: fit-content;
-  border-radius: 3vh;
+  border-radius: 30px;
   font-weight: bolder;
   max-width: min(500px, 70%);
-  &.from_other_color{
+  background-color: #47494e;
+  color: white;
+  cursor: default;
+
+  &.from_other_color {
     background-color: #0779e4;
   }
 }

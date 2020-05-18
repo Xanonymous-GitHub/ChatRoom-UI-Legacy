@@ -1,18 +1,13 @@
-.msg-box{
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: column;
-  &-status{
+.msg-status {
+  margin-right: 5px;
+
+  &-text {
     color: #7F828B;
-    font-size: 10px !important;
+    font-size: 10px;
     font-weight: bolder;
-    display: inline;
-    width: fit-content;
     height: min-content;
-    text-align: end;
-    text-justify: inter-word;
-    line-height: 3px;
-    justify-content: flex-end;
+    text-align: right;
     vertical-align: baseline;
+    line-height: 1.1em;
   }
 }
