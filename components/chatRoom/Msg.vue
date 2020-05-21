@@ -1,7 +1,7 @@
 <template>
   <div id="msg" :class="{sent_by_self:sendBySelf}" class="pr-2 mb-1">
     <Avatar v-if="!sendBySelf" />
-    <MsgBox :sent-by-self="sendBySelf" :text-content="textContent"/>
+    <MsgBox :sent-by-self="sendBySelf" :text-content="textContent" />
     <MsgStatus :sent-by-self="sendBySelf" :read-able="readAble" :sent-time="sentTime" />
   </div>
 </template>
@@ -20,9 +20,6 @@ import MsgStatus from '~/components/chatRoom/msg/MsgStatus.vue'
   }
 })
 export default class Msg extends Vue {
-  @Prop({ required: false })
-  private isDarkMode!: boolean;
-
   @Prop({ required: true })
   private textContent!:string;
 
