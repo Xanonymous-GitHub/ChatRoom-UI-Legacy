@@ -35,7 +35,7 @@
     "@nuxtjs/eslint-module": "^2.0.0",
     "@nuxtjs/vuetify": "^1.11.2",
     "babel-eslint": "^10.1.0",
-    "esbuild": "^0.3.6",
+    "esbuild": "^0.3.8",
     "eslint": "^7.0.0",
     "eslint-plugin-nuxt": ">=1.0.0",
     "nodemon": "^2.0.4"

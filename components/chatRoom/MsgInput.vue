@@ -24,21 +24,26 @@
 </template>
 
 <script lang="ts">
-import { Component, Provide, Vue } from 'nuxt-property-decorator'
+import { Component, Provide, Vue, Emit } from 'nuxt-property-decorator'
 import { appStore } from '~/utils/store-accessor'
+import time from '~/utils/getTime'
 @Component
 export default class MsgInput extends Vue {
   @Provide()
   private textContent=''
 
+  @Emit('scrollMsgAreaToEnd')
   private sendMessage () {
-    appStore.createMsg({
-      id: '_',
-      sendBySelf: true,
-      read: false,
-      sentTime: Date.now().toString(),
-      textContent: this.textContent.trim()
-    })
+    const textContext = this.textContent.trim()
+    if (textContext) {
+      appStore.createMsg({
+        id: '_',
+        sendBySelf: true,
+        read: false,
+        sentTime: time,
+        textContent: textContext
+      })
+    }
     this.textContent = ''
   }
 }

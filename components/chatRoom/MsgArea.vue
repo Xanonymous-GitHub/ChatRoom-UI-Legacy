@@ -1,6 +1,5 @@
 <template>
   <div
-    id="MsgArea"
     :class="{ darkBackground: isDarkMode }"
     class="full-height"
   >
