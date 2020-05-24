@@ -6,8 +6,8 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
-    title: process.env.npm_package_name || '',
+    // titleTemplate: '%s - ' + process.env.npm_package_name,
+    title: 'Mr.Coding',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -28,7 +28,9 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [],
+  plugins: [
+
+  ],
   /*
   ** Nuxt.js dev-modules
   */
@@ -42,7 +44,8 @@ module.exports = {
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    'nuxt-socket-io'
   ],
   /*
   ** Axios module configuration

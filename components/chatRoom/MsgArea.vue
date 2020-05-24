@@ -1,15 +1,16 @@
 <template>
   <div
-    :class="{ darkBackground: isDarkMode }"
-    class="full-height"
+    :class="{ 'msg-area--dark-background': isDarkMode }"
+    class="msg-area msg-area--full-height"
   >
     <Msg
-      v-for="({sendBySelf,read,sentTime,textContent}, index) in messages"
+      v-for="({sendBySelf,read,sentTime,textContent,avatarUrl}, index) in messages"
       :key="index"
       :read-able="read"
       :send-by-self="sendBySelf"
       :sent-time="sentTime"
       :text-content="textContent"
+      :avatar-url="avatarUrl"
     />
   </div>
 </template>

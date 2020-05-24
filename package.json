@@ -25,8 +25,10 @@
     "nuxt-typed-vuex": "^0.1.18",
     "postcss-scss": "^2.1.1",
     "sass": "^1.26.5",
+    "socket.io-client": "^2.3.0",
     "typescript": "^3.9.3",
     "vue-property-decorator": "^8.4.2",
+    "vue-socket.io": "^3.0.9",
     "vuex-module-decorators": "^0.17.0"
   },
   "devDependencies": {
@@ -35,8 +37,8 @@
     "@nuxtjs/eslint-module": "^2.0.0",
     "@nuxtjs/vuetify": "^1.11.2",
     "babel-eslint": "^10.1.0",
-    "esbuild": "^0.3.8",
-    "eslint": "^7.0.0",
+    "esbuild": "^0.3.9",
+    "eslint": "^7.1.0",
     "eslint-plugin-nuxt": ">=1.0.0",
     "nodemon": "^2.0.4"
   }

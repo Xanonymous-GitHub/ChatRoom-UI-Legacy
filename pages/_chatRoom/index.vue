@@ -1,10 +1,10 @@
 <template>
-  <v-app id="chat-room" class="flex-column">
-    <MsgArea id="msg-area" ref="msgArea" :is-dark-mode="isDarkMode" />
+  <v-app class="chat-room flex-column">
+    <MsgArea ref="msgArea" :is-dark-mode="isDarkMode" />
     <BottomController
       ref="bottomController"
       :is-dark-mode="isDarkMode"
-      class="pa-3 bottom fixed"
+      class="pa-3 chat-room--bottom chat-room--fixed"
       @scrollMsgAreaToEnd="scrollMsgAreaToEnd"
     />
   </v-app>

@@ -1,8 +1,8 @@
-#msg {
+.msg {
   display: flex;
   align-items: flex-end;
 
-  &.sent_by_self {
+  &--sent-by-self {
     flex-direction: row-reverse;
   }
 }

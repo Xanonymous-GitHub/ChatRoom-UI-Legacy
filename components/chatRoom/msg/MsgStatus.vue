@@ -1,9 +1,9 @@
 <template>
   <div class="msg-status">
-    <p v-if="readAble&&sentBySelf" class="msg-status-text px-0 py-0 mb-0 mx-2">
+    <p v-if="readAble&&sentBySelf" class="msg-status__text px-0 py-0 mb-0 mx-2">
       read
     </p>
-    <p class="msg-status-text px-0 py-0 mb-0 mx-2">
+    <p class="msg-status__text px-0 py-0 mb-0 mx-2">
       {{ sentTime }}
     </p>
   </div>

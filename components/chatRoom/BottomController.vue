@@ -1,6 +1,6 @@
 <template>
   <v-app-bar :dark="isDarkMode" app bottom>
-    <MsgInput id="msg-input" @scrollMsgAreaToEnd="scrollMsgAreaToEnd" />
+    <MsgInput @scrollMsgAreaToEnd="scrollMsgAreaToEnd" />
   </v-app-bar>
 </template>
 

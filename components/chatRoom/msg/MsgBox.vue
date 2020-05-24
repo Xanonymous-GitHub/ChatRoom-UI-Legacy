@@ -1,16 +1,12 @@
 <template>
-  <v-card
-    id="msg-box"
-    class="mt-5"
-    :class="{from_other_color:!sentBySelf}"
-    hover
-    dark
-    round
+  <div
+    class="msg-box mt-5"
+    :class="{'msg-box--from-other':!sentBySelf}"
   >
     <v-card-text class="py-2">
       {{ textContent.toString().trim() }}
     </v-card-text>
-  </v-card>
+  </div>
 </template>
 
 <script lang="ts">

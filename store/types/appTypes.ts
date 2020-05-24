@@ -9,8 +9,9 @@ export enum themeModes {
 
 export interface MessageType {
   id: string,
+  avatarUrl?: string,
   sendBySelf: boolean,
   read: boolean,
-  sentTime:string,
+  sentTime: string,
   textContent?: string,
 }

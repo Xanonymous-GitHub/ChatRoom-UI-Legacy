@@ -1,6 +1,6 @@
 <template>
-  <div id="msg" :class="{sent_by_self:sendBySelf}" class="pr-2 mb-1">
-    <Avatar v-if="!sendBySelf" />
+  <div :class="{'msg--sent-by-self':sendBySelf}" class="msg pr-2 mb-1">
+    <Avatar v-if="!sendBySelf" :avatar-url="avatarUrl" />
     <MsgBox :sent-by-self="sendBySelf" :text-content="textContent" />
     <MsgStatus :sent-by-self="sendBySelf" :read-able="readAble" :sent-time="sentTime" />
   </div>
@@ -31,5 +31,8 @@ export default class Msg extends Vue {
 
   @Prop({ required: true })
   private readAble!: boolean;
+
+  @Prop({ required: false })
+  private avatarUrl!:string
 }
 </script>

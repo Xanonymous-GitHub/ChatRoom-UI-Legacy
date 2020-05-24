@@ -5,18 +5,19 @@
     filled
     placeholder="Put Some Messages"
     rounded
+    class="msg-input"
     @keyup.enter="sendMessage"
   >
     <template #prepend-inner>
       <v-icon>mdi-message-reply-text</v-icon>
     </template>
     <template #append-outer>
-      <v-btn class="up-half" fab icon small @click.prevent="sendMessage">
+      <v-btn class="msg-input--up-half" fab icon small @click.prevent="sendMessage">
         <v-icon>mdi-send</v-icon>
       </v-btn>
     </template>
     <template #prepend>
-      <v-btn class="up-half" fab icon small>
+      <v-btn class="msg-input--up-half" fab icon small>
         <v-icon>mdi-plus-circle</v-icon>
       </v-btn>
     </template>
