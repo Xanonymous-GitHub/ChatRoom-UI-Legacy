@@ -10,6 +10,7 @@ $msg-box-background-color-from-other: #0779e4;
   color: white;
   cursor: default;
   box-shadow: 2px 2px 8px -1px rgba(0, 0, 0, 0.75);
+  word-break: break-word;
 
   &:hover {
     transition: 0.3s;
