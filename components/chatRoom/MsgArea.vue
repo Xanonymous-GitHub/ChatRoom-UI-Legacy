@@ -11,6 +11,7 @@
       :sent-time="sentTime"
       :text-content="textContent"
       :avatar-url="avatarUrl"
+      :is-dark-mode="isDarkMode"
     />
   </div>
 </template>

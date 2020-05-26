@@ -1,11 +1,11 @@
 <template>
   <v-text-field
     v-model="textContent"
+    class="msg-input"
     dense
     filled
     placeholder="Put Some Messages"
     rounded
-    class="msg-input"
     @keyup.enter="sendMessage"
   >
     <template #prepend-inner>
@@ -28,24 +28,27 @@
 import { Component, Provide, Vue, Emit } from 'nuxt-property-decorator'
 import { appStore } from '~/utils/store-accessor'
 import time from '~/utils/getTime'
-@Component
-export default class MsgInput extends Vue {
-  @Provide()
-  private textContent=''
 
-  @Emit('scrollMsgAreaToEnd')
-  private sendMessage () {
-    const textContext = this.textContent.trim()
-    if (textContext) {
-      appStore.createMsg({
-        id: '_',
-        sendBySelf: true,
-        read: false,
-        sentTime: time,
-        textContent: textContext
-      })
+  @Component
+export default class MsgInput extends Vue {
+    @Provide()
+    private textContent = ''
+
+    @Emit('scrollMsgAreaToEnd')
+    private sendMessage () {
+      const textContext = this.textContent.trim()
+      if (textContext) {
+        appStore.createMsg({
+          id: '_',
+          sendBySelf: false,
+          read: false, // debug
+          author: '',
+          sentTime: time,
+          avatarUrl: 'https://avatars1.githubusercontent.com/u/47718989?s=460&u=841507c2a6352d4d4b4febd652cb175df3c0ac04&v=4',
+          textContent: textContext
+        })
+      }
+      this.textContent = ''
     }
-    this.textContent = ''
-  }
 }
 </script>

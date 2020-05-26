@@ -1,22 +1,26 @@
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
-import { MessageType, themeModes } from '~/store/types/appTypes'
+import { MessageType, themeModes, UserAvatar } from '~/store/types/appTypes'
 import uuid from '~/utils/uuid'
 
 @Module({ name: 'app', stateFactory: true, namespaced: true })
 export default class AppStore extends VuexModule {
   private themeMode = themeModes.AUTO;
 
+  private avatars: Array<UserAvatar> = [];
+
   private messages: Array<MessageType> = [
     {
       id: '123',
+      author: 'Xanonymous',
       sendBySelf: false,
-      avatarUrl: 'https://avatars1.githubusercontent.com/u/47718989?s=460&u=841507c2a6352d4d4b4febd652cb175df3c0ac04&v=4',
+      avatarUrl: 'icon.png',
       read: false,
       sentTime: '03:24',
       textContent: 'ccccccc'
     },
     {
       id: '456',
+      author: 'Xanonymous',
       sendBySelf: true,
       read: true,
       sentTime: '03:25',
@@ -38,6 +42,11 @@ export default class AppStore extends VuexModule {
     }
   }
 
+  @Mutation
+  PUSH_AVATAR (avatar: UserAvatar) {
+    this.avatars.push(avatar)
+  }
+
   @Action({ commit: 'CREATE_MSG' })
   createMsg (insertData: MessageType, insertPosition?: (number | undefined)) {
     insertData.id = uuid()
@@ -50,5 +59,9 @@ export default class AppStore extends VuexModule {
 
   get getMessage () {
     return this.messages
+  }
+
+  get getAvatars () {
+    return this.avatars
   }
 }

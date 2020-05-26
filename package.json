@@ -16,6 +16,7 @@
     "@nuxt/typescript-runtime": "^0.4.7",
     "@nuxtjs/axios": "^5.10.3",
     "@nuxtjs/style-resources": "^1.0.0",
+    "axios": "^0.19.2",
     "cross-env": "^7.0.2",
     "fastify": "^2.14.1",
     "fork-ts-checker-webpack-plugin": "^4.1.4",
