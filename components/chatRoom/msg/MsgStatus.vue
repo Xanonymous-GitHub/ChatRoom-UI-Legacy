@@ -1,6 +1,9 @@
 <template>
   <div class="msg-status">
-    <p v-if="readAble&&sentBySelf" class="msg-status__text px-0 py-0 mb-0 mx-2">
+    <p
+      v-if="readAble && sentBySelf"
+      class="msg-status__text px-0 py-0 mb-0 mx-2"
+    >
       read
     </p>
     <p class="msg-status__text px-0 py-0 mb-0 mx-2">
@@ -21,6 +24,6 @@ export default class MsgStatus extends Vue {
   private readAble!: boolean;
 
   @Prop({ required: true })
-  private sentBySelf!:boolean;
+  private sentBySelf!: boolean;
 }
 </script>
