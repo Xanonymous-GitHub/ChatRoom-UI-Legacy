@@ -6,7 +6,6 @@ export default async function getBase64ImgPath (url: string): Promise<string> {
     image.onload = () => {
       canvas.width = image.naturalWidth
       canvas.height = image.naturalHeight
-      console.log(image.src)
       ctx!.drawImage(image, 0, 0)
       ctx!.drawImage(image, 0, 0, canvas.width, canvas.height)
       resolve()

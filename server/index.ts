@@ -1,12 +1,15 @@
 const { Nuxt, Builder } = require('nuxt')
 const fastify = require('fastify')({
+  http2: true,
+  https: {
+    allowHTTP1: true
+  },
   logger: true
 })
 
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config.js')
 config.dev = process.env.NODE_ENV !== 'production'
-
 async function start () {
   // Instantiate nuxt.js
   const nuxt = new Nuxt(config)
@@ -26,7 +29,7 @@ async function start () {
   fastify.use(nuxt.render)
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  fastify.listen(port, host, (err:any) => {
+  fastify.listen(port, host, (err: any) => {
     if (err) {
       fastify.log.error(err)
       process.exit(1)
