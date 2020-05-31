@@ -1,4 +1,4 @@
-function getTime (time?: number|undefined) {
+export default function (time?: number|undefined) {
   const clientTime = new Date(time || Date.now())
   const isAm = clientTime.getHours() < 12
   const hour = clientTime.getHours()
@@ -10,5 +10,3 @@ function getTime (time?: number|undefined) {
   }
   return (isAm ? hour : hour - 12) + ':' + minute.toString() + (isAm ? ' am' : ' pm')
 }
-
-export default getTime

@@ -20,7 +20,10 @@ module.exports = {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: {
+    color: 'blue',
+    height: '5px'
+  },
   /*
   ** Global CSS
   */
@@ -43,8 +46,8 @@ module.exports = {
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-    'nuxt-socket-io'
+    // '@nuxtjs/axios'
+    '~/io'
   ],
   /*
   ** Axios module configuration
@@ -87,24 +90,27 @@ module.exports = {
           warning: '#FB8C00'
         }
       }
-    },
+    }
     /*
     ** Build configuration
     */
-    build: {
-      extractCSS: true,
-      transpile: [
-        /typed-vuex/
-      ]
-    },
-    typescript: {
-      typeCheck: {
-        eslint: true
-      }
-    },
-    store: true,
-    styleResources: {
-      scss: '@/assets/app.scss'
+  },
+  build: {
+    extractCSS: true,
+    transpile: [
+      /typed-vuex/
+    ]
+  },
+  typescript: {
+    typeCheck: {
+      eslint: true
     }
+  },
+  store: true,
+  styleResources: {
+    scss: '@/assets/app.scss'
+  },
+  env: {
+    WS_URL: process.env.WS_URL || 'http://localhost:3000'
   }
 }

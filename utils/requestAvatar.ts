@@ -1,4 +1,4 @@
-export default async function getBase64ImgPath (url: string): Promise<string> {
+export default async function (url: string): Promise<string> {
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
   const image = new Image()
