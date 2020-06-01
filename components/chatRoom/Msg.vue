@@ -1,8 +1,8 @@
 <template>
   <div :class="{'msg--sent-by-self':sendBySelf}" class="msg pr-2 mb-1">
-    <Avatar v-if="!sendBySelf" :avatar-url="avatarBase64Path" :is-dark-mode="isDarkMode" />
-    <MsgBox :sent-by-self="sendBySelf" :context="context" />
-    <MsgStatus :read-able="readAble" :sent-by-self="sendBySelf" :sent-time="sentTime" />
+    <Avatar v-if="!sendBySelf" :avatar="owner.avatar" :is-dark-mode="isDarkMode" />
+    <MsgBox :context="msgSetup.context" :sent-by-self="sendBySelf" />
+    <MsgStatus :read="msgSetup.read" :sent-by-self="sendBySelf" :sent-time="msgSetup.updateAt" />
   </div>
 </template>
 
@@ -12,8 +12,7 @@ import MsgBox from './msg/MsgBox.vue'
 import Avatar from '~/components/chatRoom/msg/Avatar.vue'
 import MsgStatus from '~/components/chatRoom/msg/MsgStatus.vue'
 import { appStore } from '~/utils/store-accessor'
-import { UserAvatar } from '~/store/types/appTypes'
-import getBase64ImgPath from '~/utils/requestAvatar'
+import { MessageType, UserType } from '~/store/types/appTypes'
 
   @Component({
     components: {
@@ -23,51 +22,23 @@ import getBase64ImgPath from '~/utils/requestAvatar'
     }
   })
 export default class Msg extends Vue {
-    @Prop({ required: true })
-    private context!: string;
+    private sendBySelf: boolean = false
 
     @Prop({ required: true })
-    private sendBySelf!: boolean
+    private msgSetup!:MessageType
 
     @Prop({ required: true })
-    private sentTime!: string;
-
-    @Prop({ required: true })
-    private readAble!: boolean;
+    private owner!:UserType
 
     @Prop({ required: false })
-    private avatarUrl!: string
-
-    @Prop({ required: false })
-    private isDarkMode!: boolean;
-
-    private avatarBase64Path: string = '';
+    private isDarkMode!:boolean
 
     private mounted () {
-      const avatar = appStore.getAvatars.find((current: UserAvatar) => {
-        return current.realUrl === this.avatarUrl
-      })
-      if (!avatar) {
-        this.requestBase64Avatar(this.avatarUrl)
-      } else {
-        this.setAvatarUrl(avatar.path)
-      }
+      this.sendBySelf = this.msgSetup.author === Msg.getCurrentUserId
     }
 
-    private setAvatarUrl (url: string) {
-      this.avatarBase64Path = url
-    }
-
-    private async requestBase64Avatar (avatarUrl: string) {
-      const path = await getBase64ImgPath(avatarUrl)
-      if (path) {
-        const newAvatar: UserAvatar = {
-          path,
-          realUrl: this.avatarUrl
-        }
-        appStore.PUSH_AVATAR(newAvatar)
-        this.setAvatarUrl(path)
-      }
+    private static get getCurrentUserId () {
+      return appStore.getCurrentUser._id
     }
 }
 </script>

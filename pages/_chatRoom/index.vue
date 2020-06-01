@@ -1,9 +1,10 @@
 <template>
   <v-app class="chat-room flex-column">
-    <MsgArea ref="msgArea" :is-dark-mode="isDarkMode" />
+    <MsgArea ref="msgArea" :is-dark-mode="isDarkMode" :current-chat-room-id="currentChatRoomId" />
     <BottomController
       ref="bottomController"
       :is-dark-mode="isDarkMode"
+      :current-chat-room-id="currentChatRoomId"
       class="pa-3 chat-room--bottom chat-room--fixed"
       @scrollMsgAreaToEnd="scrollMsgAreaToEnd"
       @sendNewMsg="sendNewMsg"
@@ -35,7 +36,6 @@ interface RefElement extends Element {
 })
 export default class ChatRoom extends Vue {
   private socket = io(process.env.WS_URL!, {
-    // path: '/456',
     autoConnect: false,
     reconnectionAttempts: 20
   })
@@ -44,16 +44,20 @@ export default class ChatRoom extends Vue {
     return appStore.isDarkMode
   }
 
+  get currentChatRoomId () {
+    return appStore.getCurrentChatRoomId
+  }
+
   public asyncData () {
-    // io.on('connection', (socket) => {
-    // })
   }
 
   public async beforeMount () {
+    // set the current chatroom id
+    appStore.SET_CHATROOM_ID(this.$route.params.chatRoom)
     // register the new msg event.
     await this.socket.open()
-    this.socket.on('new-message', (message:MessageType) => {
-      appStore.createMsg(message)
+    this.socket.on('new-message', (newMsg:MessageType) => {
+      appStore.createMsg({ newMsg, chatroomID: this.currentChatRoomId })
     })
   }
 
@@ -63,7 +67,7 @@ export default class ChatRoom extends Vue {
 
   public validate ({ params }: { params: any }) {
     // find if there is a chatroom that id is equal to the params.
-    return params.chatRoom === '123'
+    return params.chatRoom === 'abc'
   }
 
   private sendNewMsg (newMsg:MessageType) {

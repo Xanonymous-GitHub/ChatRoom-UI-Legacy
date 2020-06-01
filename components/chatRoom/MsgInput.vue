@@ -25,9 +25,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Provide, Vue, Emit } from 'nuxt-property-decorator'
+import { Component, Provide, Vue, Emit, Prop } from 'nuxt-property-decorator'
 import { appStore } from '~/utils/store-accessor'
-import time from '~/utils/getTime'
 import { MessageType } from '@/store/types/appTypes'
 
 @Component
@@ -35,23 +34,24 @@ export default class MsgInput extends Vue {
     @Provide()
     private textContent = ''
 
+    @Prop({ required: true })
+    private currentChatRoomId!:string
+
     @Emit('scrollMsgAreaToEnd')
     @Emit('sendNewMsg')
     private sendMessage () {
       const textContext = this.textContent.trim()
       this.textContent = ''
-      let newMsg:MessageType
       if (textContext) {
-        newMsg = {
-          _id: '_',
-          sendBySelf: false,
-          read: false, // debug
-          author: '',
-          sentTime: time(),
-          avatarUrl: 'https://avatars1.githubusercontent.com/u/47718989?s=460&u=841507c2a6352d4d4b4febd652cb175df3c0ac04&v=4',
-          context: textContext
+        const newMsg:MessageType = {
+          _id: 'this will generate by backend server.',
+          read: false,
+          author: appStore.getCurrentUser._id,
+          updateAt: Date.now(),
+          context: textContext,
+          chatroomID: this.currentChatRoomId
         }
-        appStore.createMsg(newMsg)
+        appStore.createMsg({ newMsg, chatroomID: this.currentChatRoomId })
         return newMsg
       }
     }

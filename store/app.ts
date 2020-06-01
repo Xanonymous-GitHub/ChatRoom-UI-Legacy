@@ -1,32 +1,50 @@
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
-import { MessageType, themeModes, UserAvatar } from '~/store/types/appTypes'
+import { MessageType, themeModes, UserType, MessageContainerType } from '~/store/types/appTypes'
 import uuid from '~/utils/uuid'
 
 @Module({ name: 'app', stateFactory: true, namespaced: true })
 export default class AppStore extends VuexModule {
   private themeMode = themeModes.AUTO;
 
-  private avatars: Array<UserAvatar> = [];
+  private currentUser: UserType =
+    {
+      _id: 'TeuId',
+      username: 'TeU',
+      verified: false,
+      avatar: 'https://cdn.vuetifyjs.com/images/profiles/marcus.jpg' // should be a base64
+    }
 
-  private messages: Array<MessageType> = [
+  private otherUsers: Array<UserType> = [
     {
-      _id: '123',
-      author: 'Xanonymous',
-      sendBySelf: false,
-      avatarUrl: 'icon.png',
-      read: false,
-      sentTime: '03:24',
-      context: 'ccccccc'
-    },
-    {
-      _id: '456',
-      author: 'Xanonymous',
-      sendBySelf: true,
-      read: true,
-      sentTime: '03:25',
-      context: 'ssssss'
+      _id: 'XanonymousId',
+      username: 'Xanonymous',
+      verified: false,
+      avatar: 'https://cdn.vuetifyjs.com/images/profiles/marcus.jpg' // should be a base64
     }
   ]
+
+  private messages: MessageContainerType = {
+    abc: [
+      {
+        _id: '123',
+        author: 'XanonymousId',
+        read: false,
+        updateAt: 1591029484912,
+        context: 'this is a test message from xanonymous in room 123',
+        chatroomID: 'abc'
+      },
+      {
+        _id: '456',
+        author: 'TeuId',
+        read: true,
+        updateAt: 1591029503976,
+        context: 'this is also a test message from Teu in room 123',
+        chatroomID: 'abc'
+      }
+    ]
+  }
+
+  private currentChatRoomId: string = ''
 
   @Mutation
   SET_THEME_MODE (mode: themeModes) {
@@ -34,23 +52,23 @@ export default class AppStore extends VuexModule {
   }
 
   @Mutation
-  CREATE_MSG ({ insertPosition, insertData }: { insertPosition: number, insertData: MessageType }) {
+  CREATE_MSG ({ newMsg, chatroomID, insertPosition }: { newMsg: MessageType, chatroomID: string, insertPosition: number }) {
     if (insertPosition) {
-      this.messages.splice(insertPosition, 0, insertData)
+      this.messages[`${chatroomID}`].splice(insertPosition, 0, newMsg)
     } else {
-      this.messages.push(insertData)
+      this.messages[`${chatroomID}`].push(newMsg)
     }
   }
 
   @Mutation
-  PUSH_AVATAR (avatar: UserAvatar) {
-    this.avatars.push(avatar)
+  SET_CHATROOM_ID (id: string) {
+    this.currentChatRoomId = id
   }
 
   @Action({ commit: 'CREATE_MSG' })
-  createMsg (insertData: MessageType, insertPosition?: (number | undefined)) {
-    insertData._id = uuid()
-    return { insertData, insertPosition }
+  createMsg ({ newMsg, chatroomID, insertPosition }: { newMsg: MessageType, chatroomID: string, insertPosition?: (number | undefined) }) {
+    newMsg._id = uuid() // actually from TODO -> server.
+    return { newMsg, chatroomID, insertPosition }
   }
 
   get isDarkMode () {
@@ -61,7 +79,15 @@ export default class AppStore extends VuexModule {
     return this.messages
   }
 
-  get getAvatars () {
-    return this.avatars
+  get getCurrentUser () {
+    return this.currentUser
+  }
+
+  get getOtherUsers () {
+    return this.otherUsers
+  }
+
+  get getCurrentChatRoomId () {
+    return this.currentChatRoomId
   }
 }
