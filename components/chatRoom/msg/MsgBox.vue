@@ -4,7 +4,7 @@
     :class="{'msg-box--from-other':!sentBySelf}"
   >
     <v-card-text class="py-2">
-      {{ textContent.toString().trim() }}
+      {{ context.toString().trim() }}
     </v-card-text>
   </div>
 </template>
@@ -15,7 +15,7 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 @Component({})
 export default class MsgBox extends Vue {
   @Prop({ required: true })
-  private textContent!:string;
+  private context!:string;
 
   @Prop({ required: true })
   private sentBySelf!:boolean;

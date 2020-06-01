@@ -67,7 +67,7 @@ export default class ChatRoom extends Vue {
   }
 
   private sendNewMsg (newMsg:MessageType) {
-    this.socket.emit('send-message', newMsg)
+    this.socket.emit('message', newMsg)
   }
 
   private setMsgAreaPadding () {

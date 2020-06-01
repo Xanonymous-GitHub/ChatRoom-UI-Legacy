@@ -1,10 +1,10 @@
 <template>
   <v-avatar class="mx-2" size="24px">
-    <v-icon v-if="!avatarExist" :dark="isDarkMode">
+    <v-icon v-if="!avatarUrl" :dark="isDarkMode">
       mdi-account-circle
     </v-icon>
     <img
-      v-if="avatarExist"
+      v-if="avatarUrl"
       :src="avatarUrl"
       alt="Avatar"
       class="avatar"
@@ -22,8 +22,5 @@ export default class Avatar extends Vue {
 
     @Prop({ required: false })
     private isDarkMode!: boolean;
-
-    @Prop({ required: true })
-    private avatarExist!: boolean
 }
 </script>

@@ -4,12 +4,12 @@
     class="msg-area msg-area--full-height"
   >
     <Msg
-      v-for="({sendBySelf,read,sentTime,textContent,avatarUrl}, index) in messages"
+      v-for="({sendBySelf,read,sentTime,context,avatarUrl}, index) in messages"
       :key="index"
       :read-able="read"
       :send-by-self="sendBySelf"
       :sent-time="sentTime"
-      :text-content="textContent"
+      :context="context"
       :avatar-url="avatarUrl"
       :is-dark-mode="isDarkMode"
     />

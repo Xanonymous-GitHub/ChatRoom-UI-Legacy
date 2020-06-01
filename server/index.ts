@@ -3,7 +3,7 @@ import http from 'http'
 import { Nuxt, Builder } from 'nuxt'
 import express from 'express'
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 8787
 const isProd = process.env.NODE_ENV === 'production'
 const app = express()
 const server = http.createServer(app)

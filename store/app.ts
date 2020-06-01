@@ -10,21 +10,21 @@ export default class AppStore extends VuexModule {
 
   private messages: Array<MessageType> = [
     {
-      id: '123',
+      _id: '123',
       author: 'Xanonymous',
       sendBySelf: false,
       avatarUrl: 'icon.png',
       read: false,
       sentTime: '03:24',
-      textContent: 'ccccccc'
+      context: 'ccccccc'
     },
     {
-      id: '456',
+      _id: '456',
       author: 'Xanonymous',
       sendBySelf: true,
       read: true,
       sentTime: '03:25',
-      textContent: 'ssssss'
+      context: 'ssssss'
     }
   ]
 
@@ -49,7 +49,7 @@ export default class AppStore extends VuexModule {
 
   @Action({ commit: 'CREATE_MSG' })
   createMsg (insertData: MessageType, insertPosition?: (number | undefined)) {
-    insertData.id = uuid()
+    insertData._id = uuid()
     return { insertData, insertPosition }
   }
 

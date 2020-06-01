@@ -1,7 +1,7 @@
 <template>
   <div :class="{'msg--sent-by-self':sendBySelf}" class="msg pr-2 mb-1">
-    <Avatar v-if="!sendBySelf" :avatar-exist="!!avatarBase64Path" :avatar-url="avatarBase64Path" :is-dark-mode="isDarkMode" />
-    <MsgBox :sent-by-self="sendBySelf" :text-content="textContent" />
+    <Avatar v-if="!sendBySelf" :avatar-url="avatarBase64Path" :is-dark-mode="isDarkMode" />
+    <MsgBox :sent-by-self="sendBySelf" :context="context" />
     <MsgStatus :read-able="readAble" :sent-by-self="sendBySelf" :sent-time="sentTime" />
   </div>
 </template>
@@ -24,7 +24,7 @@ import getBase64ImgPath from '~/utils/requestAvatar'
   })
 export default class Msg extends Vue {
     @Prop({ required: true })
-    private textContent!: string;
+    private context!: string;
 
     @Prop({ required: true })
     private sendBySelf!: boolean

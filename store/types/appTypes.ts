@@ -8,13 +8,16 @@ export enum themeModes {
 }
 
 export interface MessageType {
-  id: string, // mongoose id
+  _id: string, // mongoose id
   author:string, // line user id
   avatarUrl?: string,
   sendBySelf: boolean,
   read: boolean,
   sentTime: string,
-  textContent?: string,
+  context?: string,
+  chatroomID?: string,
+  createAt?: string,
+  updateAt?: string
 }
 
 export interface UserAvatar {

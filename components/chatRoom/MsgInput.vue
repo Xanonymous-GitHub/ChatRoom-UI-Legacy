@@ -43,13 +43,13 @@ export default class MsgInput extends Vue {
       let newMsg:MessageType
       if (textContext) {
         newMsg = {
-          id: '_',
+          _id: '_',
           sendBySelf: false,
           read: false, // debug
           author: '',
           sentTime: time(),
           avatarUrl: 'https://avatars1.githubusercontent.com/u/47718989?s=460&u=841507c2a6352d4d4b4febd652cb175df3c0ac04&v=4',
-          textContent: textContext
+          context: textContext
         }
         appStore.createMsg(newMsg)
         return newMsg
