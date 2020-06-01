@@ -1,12 +1,13 @@
 <template>
   <v-app-bar :dark="isDarkMode" app bottom>
-    <MsgInput @scrollMsgAreaToEnd="scrollMsgAreaToEnd" />
+    <MsgInput @scrollMsgAreaToEnd="scrollMsgAreaToEnd" @sendNewMsg="sendNewMsg" />
   </v-app-bar>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop, Emit } from 'nuxt-property-decorator'
 import MsgInput from '~/components/chatRoom/MsgInput.vue'
+import { MessageType } from '@/store/types/appTypes'
 
 @Component({
   components: {
@@ -19,5 +20,10 @@ export default class BottomController extends Vue {
 
     @Emit('scrollMsgAreaToEnd')
     private scrollMsgAreaToEnd () {}
+
+    @Emit('sendNewMsg')
+    private sendNewMsg (newMsg:MessageType) {
+      return newMsg
+    }
 }
 </script>

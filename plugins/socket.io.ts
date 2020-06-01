@@ -1,2 +1,2 @@
-const socket = require('socket.io-client')(process.env.WS_URL!)
+const socket = require('socket.io-client')
 export default socket

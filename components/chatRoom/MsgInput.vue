@@ -28,17 +28,21 @@
 import { Component, Provide, Vue, Emit } from 'nuxt-property-decorator'
 import { appStore } from '~/utils/store-accessor'
 import time from '~/utils/getTime'
+import { MessageType } from '@/store/types/appTypes'
 
-  @Component
+@Component
 export default class MsgInput extends Vue {
     @Provide()
     private textContent = ''
 
     @Emit('scrollMsgAreaToEnd')
+    @Emit('sendNewMsg')
     private sendMessage () {
       const textContext = this.textContent.trim()
+      this.textContent = ''
+      let newMsg:MessageType
       if (textContext) {
-        appStore.createMsg({
+        newMsg = {
           id: '_',
           sendBySelf: false,
           read: false, // debug
@@ -46,9 +50,10 @@ export default class MsgInput extends Vue {
           sentTime: time(),
           avatarUrl: 'https://avatars1.githubusercontent.com/u/47718989?s=460&u=841507c2a6352d4d4b4febd652cb175df3c0ac04&v=4',
           textContent: textContext
-        })
+        }
+        appStore.createMsg(newMsg)
+        return newMsg
       }
-      this.textContent = ''
     }
 }
 </script>

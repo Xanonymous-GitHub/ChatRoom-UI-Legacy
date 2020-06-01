@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import socket from '~/plugins/socket.io'
+import io from '~/plugins/socket.io'
 
 @Component({})
 export default class RootPage extends Vue {
@@ -30,12 +30,19 @@ export default class RootPage extends Vue {
 
   private message:string=''
 
+  private socket = io(process.env.WS_URL!, {
+    path: '/456',
+    autoConnect: false,
+    reconnectionAttempts: 20
+  })
+
   public asyncData () {
-    socket.emit('last-messages')
+    // this.socket.emit('last-messages')
   }
 
-  public beforeMount () {
-    socket.on('new-message', (message:any) => {
+  public async beforeMount () {
+    await this.socket.open()
+    this.socket.on('new-message', (message:any) => {
       this.messages.push(message)
     })
   }
@@ -50,7 +57,7 @@ export default class RootPage extends Vue {
     }
     this.messages.push(message)
     this.message = ''
-    socket.emit('send-message', message)
+    this.socket.emit('send-message', message)
   }
 }
 </script>

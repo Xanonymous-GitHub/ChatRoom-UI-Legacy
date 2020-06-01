@@ -1,5 +1,6 @@
 import http from 'http'
 import socketIO from 'socket.io'
+import { MessageType } from './../store/types/appTypes'
 
 export default function (this: any) {
   this.nuxt.hook('render:before', (_renderer: any) => {
@@ -7,14 +8,10 @@ export default function (this: any) {
     const io = socketIO(server)
     this.nuxt.server.listen = (port: any, host: any) => new Promise(resolve => server.listen(port || 3000, host || 'localhost', resolve))
     this.nuxt.hook('close', () => new Promise(server.close))
-    const messages : Array<{
-      date:string,
-      text:string
-    }> = []
+
+    const messages : Array<MessageType> = []
     io.on('connection', (socket) => {
-      socket.on('last-messages', () => {
-      })
-      socket.on('send-message', (message) => {
+      socket.on('send-message', (message:MessageType) => {
         messages.push(message)
         socket.broadcast.emit('new-message', message)
       })

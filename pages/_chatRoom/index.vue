@@ -6,6 +6,7 @@
       :is-dark-mode="isDarkMode"
       class="pa-3 chat-room--bottom chat-room--fixed"
       @scrollMsgAreaToEnd="scrollMsgAreaToEnd"
+      @sendNewMsg="sendNewMsg"
     />
   </v-app>
 </template>
@@ -15,6 +16,8 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import BottomController from '@/components/chatRoom/BottomController.vue'
 import MsgArea from '@/components/chatRoom/MsgArea.vue'
 import { appStore } from '@/store'
+import io from '~/plugins/socket.io'
+import { MessageType } from '@/store/types/appTypes'
 
 interface RefElement extends Element {
   $el?: {
@@ -31,17 +34,40 @@ interface RefElement extends Element {
   }
 })
 export default class ChatRoom extends Vue {
+  private socket = io(process.env.WS_URL!, {
+    // path: '/456',
+    autoConnect: false,
+    reconnectionAttempts: 20
+  })
+
   get isDarkMode () {
     return appStore.isDarkMode
+  }
+
+  public asyncData () {
+    // io.on('connection', (socket) => {
+    // })
+  }
+
+  public async beforeMount () {
+    // register the new msg event.
+    await this.socket.open()
+    this.socket.on('new-message', (message:MessageType) => {
+      appStore.createMsg(message)
+    })
   }
 
   public mounted () {
     this.setMsgAreaPadding()
   }
 
-  public validate ({ params }:{params:any}) {
+  public validate ({ params }: { params: any }) {
     // find if there is a chatroom that id is equal to the params.
-    return params.chatRoom === '3'
+    return params.chatRoom === '123'
+  }
+
+  private sendNewMsg (newMsg:MessageType) {
+    this.socket.emit('send-message', newMsg)
   }
 
   private setMsgAreaPadding () {
