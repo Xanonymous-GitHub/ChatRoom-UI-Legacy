@@ -20,6 +20,7 @@
     "axios": "^0.19.2",
     "cross-env": "^7.0.2",
     "express": "^4.17.1",
+    "forever": "^3.0.0",
     "fork-ts-checker-webpack-plugin": "^4.1.6",
     "nuxt": "^2.12.2",
     "nuxt-property-decorator": "^2.7.2",

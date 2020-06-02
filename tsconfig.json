@@ -12,7 +12,7 @@
     ],
     "esModuleInterop": true,
     "allowJs": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "strict": true,
     "noEmit": true,
     "experimentalDecorators": true,

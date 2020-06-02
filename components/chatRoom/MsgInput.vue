@@ -4,9 +4,11 @@
     class="msg-input"
     dense
     filled
+    no-resize
+    hide-details
     placeholder="Put Some Messages"
     rounded
-    @keyup.enter="sendMessage"
+    @keypress.enter.exact.prevent="sendMessage"
   >
     <template #prepend-inner>
       <v-icon>mdi-message-reply-text</v-icon>
