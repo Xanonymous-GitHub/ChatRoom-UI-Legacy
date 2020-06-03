@@ -44,7 +44,7 @@ export default class AppStore extends VuexModule {
     ]
   }
 
-  private currentChatRoomId: string = ''
+  private currentChatRoomIdentify: string = ''
 
   @Mutation
   SET_THEME_MODE (mode: themeModes) {
@@ -61,8 +61,8 @@ export default class AppStore extends VuexModule {
   }
 
   @Mutation
-  SET_CHATROOM_ID (id: string) {
-    this.currentChatRoomId = id
+  SET_CHATROOM_IDENTIFY (identify: string) {
+    this.currentChatRoomIdentify = identify
   }
 
   @Action({ commit: 'CREATE_MSG' })
@@ -87,7 +87,7 @@ export default class AppStore extends VuexModule {
     return this.otherUsers
   }
 
-  get getCurrentChatRoomId () {
-    return this.currentChatRoomId
+  get getCurrentChatRoomIdentify () {
+    return this.currentChatRoomIdentify
   }
 }

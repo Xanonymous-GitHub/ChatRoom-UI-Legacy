@@ -35,12 +35,12 @@ export default class MsgArea extends Vue {
       return appStore.getMessage[`${this.currentChatRoomId}`]
     }
 
-    private msgOwner (msgAuthorId: string):UserType {
+    private msgOwner (msgAuthor: string):UserType {
       const currentUser = appStore.getCurrentUser
-      if (msgAuthorId === currentUser._id) {
+      if (msgAuthor === currentUser.username) {
         return currentUser
       }
-      return appStore.getOtherUsers.find(user => user._id === msgAuthorId)!
+      return appStore.getOtherUsers.find(user => user.username === msgAuthor)!
     }
 }
 </script>

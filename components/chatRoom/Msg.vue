@@ -34,11 +34,11 @@ export default class Msg extends Vue {
     private isDarkMode!:boolean
 
     private mounted () {
-      this.sendBySelf = this.msgSetup.author === Msg.getCurrentUserId
+      this.sendBySelf = this.msgSetup.author === Msg.getCurrentUserUsername
     }
 
-    private static get getCurrentUserId () {
-      return appStore.getCurrentUser._id
+    private static get getCurrentUserUsername () {
+      return appStore.getCurrentUser.username
     }
 }
 </script>
