@@ -42,7 +42,7 @@
     "@nuxtjs/vuetify": "^1.11.2",
     "@types/socket.io-client": "^1.4.33",
     "babel-eslint": "^10.1.0",
-    "esbuild": "^0.4.3",
+    "esbuild": "^0.4.4",
     "eslint": "^7.1.0",
     "eslint-plugin-nuxt": ">=1.0.0",
     "nodemon": "^2.0.4"

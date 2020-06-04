@@ -26,10 +26,11 @@ export interface UserType {
 }
 
 export interface ChatRoomType {
-  _id: string, // mongoose id, absolutely unique
+  _id: string, // mongoose id, absolutely unique, is the route path at /:chatRoom
   owner?: string, // the hashed user's line uuid => hashed[(username])
-  identify: string, // a route param -> /:chatRoom, generated from 'createChatRoom' in google script
+  identify: string, // generated from 'createChatRoom' in google script
   closed: boolean // show that if this room is closed or not.
+  lineAccessToken: string // the line accessToken from [owner]
 }
 
 export interface MessageContainerType {
