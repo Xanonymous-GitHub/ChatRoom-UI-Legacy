@@ -1,13 +1,12 @@
-import Vue from 'vue'
 import axios from 'axios'
-import { ChatRoomType, MessageType, UserType } from '~/store/types/appTypes'
+import { ChatRoomType, MessageType, AdminType } from '~/store/types/appTypes'
 import { ResponseErrorType } from '~/store/types/apiTypes'
 
 axios.defaults.baseURL = '/api'
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
 
-class API {
-  static async getSpecifyChatRoomsData (chatRoomId: string): Promise<ChatRoomType | ResponseErrorType> {
+export default class API {
+  static async getSpecifyChatRoomData (chatRoomId: string): Promise<ChatRoomType | ResponseErrorType> {
     try {
       const { data } = await axios.get(`/chatrooms/${chatRoomId}`)
       return data
@@ -125,7 +124,7 @@ class API {
     }
   }
 
-  static async getSpecifyAdminData (UserId: string): Promise<UserType | ResponseErrorType> {
+  static async getSpecifyAdminData (UserId: string): Promise<AdminType | ResponseErrorType> {
     try {
       const { data } = await axios.get(`/users/${UserId}`)
       return data
@@ -135,7 +134,7 @@ class API {
     }
   }
 
-  static async getAllAdminsData (jwtToken: string): Promise<Array<UserType> | ResponseErrorType> {
+  static async getAllAdminsData (jwtToken: string): Promise<Array<AdminType> | ResponseErrorType> {
     try {
       const { data } = await axios.get('/users', {
         headers: {
@@ -149,7 +148,7 @@ class API {
     }
   }
 
-  static async setAdminInfo (userId: string, info: string, jwtToken: string): Promise<UserType | ResponseErrorType> {
+  static async setAdminInfo (userId: string, info: string, jwtToken: string): Promise<AdminType | ResponseErrorType> {
     try {
       const { data } = await axios.patch(`/users/${userId}/info`, {
         info
@@ -168,7 +167,7 @@ class API {
     }
   }
 
-  static async setAdminAvatar (userId: string, avatar: string, jwtToken: string): Promise<UserType | ResponseErrorType> {
+  static async setAdminAvatar (userId: string, avatar: string, jwtToken: string): Promise<AdminType | ResponseErrorType> {
     try {
       const { data } = await axios.patch(`/users/${userId}/avatar`, {
         avatar
@@ -187,7 +186,7 @@ class API {
     }
   }
 
-  static async setAdminValidation (userId: string, cc: string, jwtToken: string): Promise<UserType | ResponseErrorType> {
+  static async setAdminValidation (userId: string, cc: string, jwtToken: string): Promise<AdminType | ResponseErrorType> {
     try {
       const { data } = await axios.patch(`/users/${userId}/cc`, {
         cc
@@ -206,5 +205,3 @@ class API {
     }
   }
 }
-
-Vue.prototype.$api = API

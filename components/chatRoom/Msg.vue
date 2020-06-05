@@ -12,7 +12,7 @@ import MsgBox from './msg/MsgBox.vue'
 import Avatar from '~/components/chatRoom/msg/Avatar.vue'
 import MsgStatus from '~/components/chatRoom/msg/MsgStatus.vue'
 import { appStore } from '~/utils/store-accessor'
-import { MessageType, UserType } from '~/store/types/appTypes'
+import { MessageType, AdminType } from '~/store/types/appTypes'
 
   @Component({
     components: {
@@ -25,20 +25,20 @@ export default class Msg extends Vue {
     private sendBySelf: boolean = false
 
     @Prop({ required: true })
-    private msgSetup!:MessageType
+    private msgSetup!: MessageType
 
     @Prop({ required: true })
-    private owner!:UserType
+    private owner!: AdminType
 
     @Prop({ required: false })
-    private isDarkMode!:boolean
+    private isDarkMode!: boolean
 
-    private mounted () {
-      this.sendBySelf = this.msgSetup.author === Msg.getCurrentUserUsername
+    private static get getCurrentUserId () {
+      return appStore.getCurrentUser._id
     }
 
-    private static get getCurrentUserUsername () {
-      return appStore.getCurrentUser.username
+    private mounted () {
+      this.sendBySelf = this.msgSetup.author === Msg.getCurrentUserId
     }
 }
 </script>

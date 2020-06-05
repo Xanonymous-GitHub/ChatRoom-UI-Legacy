@@ -6,9 +6,9 @@
     <Msg
       v-for="(message, index) in messages"
       :key="index"
+      :is-dark-mode="isDarkMode"
       :msg-setup="{...message}"
       :owner="msgOwner(message.author)"
-      :is-dark-mode="isDarkMode"
     />
   </div>
 </template>
@@ -17,7 +17,7 @@
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import Msg from '~/components/chatRoom/Msg.vue'
 import { appStore } from '~/utils/store-accessor'
-import { UserType } from '~/store/types/appTypes'
+import { AdminType, UserType } from '~/store/types/appTypes'
 
   @Component({
     components: {
@@ -35,12 +35,12 @@ export default class MsgArea extends Vue {
       return appStore.getMessage[`${this.currentChatRoomId}`]
     }
 
-    private msgOwner (msgAuthor: string):UserType {
+    private msgOwner (msgAuthor: string): (AdminType | UserType) {
       const currentUser = appStore.getCurrentUser
-      if (msgAuthor === currentUser.username) {
+      if (msgAuthor === currentUser._id) {
         return currentUser
       }
-      return appStore.getOtherUsers.find(user => user.username === msgAuthor)!
+      return appStore.getOtherUsers.find(user => user._id === msgAuthor)!
     }
 }
 </script>

@@ -1,12 +1,13 @@
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
-import { MessageType, themeModes, UserType, MessageContainerType } from '~/store/types/appTypes'
+import { MessageType, themeModes, AdminType, MessageContainerType, UserType } from '~/store/types/appTypes'
 import uuid from '~/utils/uuid'
+import getBase64ImgPath from '~/utils/requestAvatar'
 
 @Module({ name: 'app', stateFactory: true, namespaced: true })
 export default class AppStore extends VuexModule {
   private themeMode = themeModes.AUTO;
 
-  private currentUser: UserType =
+  private currentUser: AdminType | UserType =
     {
       _id: 'TeuId',
       username: 'TeU',
@@ -14,7 +15,7 @@ export default class AppStore extends VuexModule {
       avatar: 'https://cdn.vuetifyjs.com/images/profiles/marcus.jpg' // should be a base64
     }
 
-  private otherUsers: Array<UserType> = [
+  private otherUsers: Array<AdminType | UserType> = [
     {
       _id: 'XanonymousId',
       username: 'Xanonymous',
@@ -44,11 +45,18 @@ export default class AppStore extends VuexModule {
     ]
   }
 
-  private currentChatRoomIdentify: string = ''
+  private currentChatRoomId: string = ''
+
+  private currentUserJwtToken: string = ''
 
   @Mutation
   SET_THEME_MODE (mode: themeModes) {
     this.themeMode = mode
+  }
+
+  @Mutation
+  SET_CURRENT_USER (originalData: UserType | AdminType) {
+    this.currentUser = originalData
   }
 
   @Mutation
@@ -61,14 +69,27 @@ export default class AppStore extends VuexModule {
   }
 
   @Mutation
-  SET_CHATROOM_IDENTIFY (identify: string) {
-    this.currentChatRoomIdentify = identify
+  SET_CHATROOM_ID (id: string) {
+    this.currentChatRoomId = id
+  }
+
+  @Mutation
+  SET_CURRENT_USER_JWT_TOKEN (jwtToken: string) {
+    this.currentUserJwtToken = jwtToken
   }
 
   @Action({ commit: 'CREATE_MSG' })
   createMsg ({ newMsg, chatroomID, insertPosition }: { newMsg: MessageType, chatroomID: string, insertPosition?: (number | undefined) }) {
     newMsg._id = uuid() // actually from TODO -> server.
     return { newMsg, chatroomID, insertPosition }
+  }
+
+  @Action({ commit: 'SET_CURRENT_USER' })
+  async setCurrentUser (originalData: UserType | AdminType) {
+    if ('avatar' in originalData) {
+      originalData.avatar = await getBase64ImgPath(originalData.avatar!)
+    }
+    return originalData
   }
 
   get isDarkMode () {
@@ -87,7 +108,11 @@ export default class AppStore extends VuexModule {
     return this.otherUsers
   }
 
-  get getCurrentChatRoomIdentify () {
-    return this.currentChatRoomIdentify
+  get getCurrentChatRoomId () {
+    return this.currentChatRoomId
+  }
+
+  get getJwtKey () {
+    return this.currentUserJwtToken
   }
 }

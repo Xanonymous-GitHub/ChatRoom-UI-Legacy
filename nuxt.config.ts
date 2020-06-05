@@ -32,7 +32,8 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/api'
+    '~/plugins/api',
+    '~/plugins/lineApi'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -99,7 +100,16 @@ module.exports = {
     extractCSS: true,
     transpile: [
       /typed-vuex/
-    ]
+    ],
+    postcss: {
+      plugins: {
+        // Disable a plugin by passing false as value
+        'postcss-url': {},
+        'postcss-nested': {},
+        'postcss-responsive-type': {},
+        'postcss-hexrgba': {}
+      }
+    }
   },
   typescript: {
     typeCheck: {

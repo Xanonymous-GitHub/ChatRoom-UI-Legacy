@@ -4,8 +4,8 @@
     class="msg-input"
     dense
     filled
-    no-resize
     hide-details
+    no-resize
     placeholder="Put Some Messages"
     rounded
     @keypress.enter.exact.prevent="sendMessage"
@@ -31,13 +31,13 @@ import { Component, Provide, Vue, Emit, Prop } from 'nuxt-property-decorator'
 import { appStore } from '~/utils/store-accessor'
 import { MessageType } from '@/store/types/appTypes'
 
-@Component
+  @Component
 export default class MsgInput extends Vue {
     @Provide()
     private textContent = ''
 
     @Prop({ required: true })
-    private currentChatRoomIdentify!:string
+    private currentChatRoomIdentify!: string
 
     @Emit('scrollMsgAreaToEnd')
     @Emit('sendNewMsg')
@@ -45,7 +45,7 @@ export default class MsgInput extends Vue {
       const textContext = this.textContent.trim()
       this.textContent = ''
       if (textContext) {
-        const newMsg:MessageType = {
+        const newMsg: MessageType = {
           _id: 'this will generate by backend server.',
           read: false,
           author: appStore.getCurrentUser._id,
