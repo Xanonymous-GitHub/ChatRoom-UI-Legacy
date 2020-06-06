@@ -65,22 +65,23 @@ export default class ChatRoom extends Vue {
     }
 
     // step 2
-    public async beforeMount () {
+    public beforeMount () {
       // set the current chatroom identify
       appStore.SET_CHATROOM_ID(this.$route.params.chatRoom)
-      // check if login
-      if (!await adminDataFetcher()) {
-        alert('please login!')
-        await this.$router.push('/')
-      }
     }
 
     // step 3
     public async mounted () {
       // modify the chatroom size to adapt the screen
       this.setMsgAreaPadding()
-      // register the new msg event.
-      await this.initializeWebSocket() // TODO add reconnection methods after connection failed
+      // check if login
+      if (!await adminDataFetcher()) {
+        alert('please login!')
+        await this.$router.push('/')
+      } else {
+        // register the new msg event.
+        await this.initializeWebSocket() // TODO add reconnection methods after connection failed
+      }
     }
 
     private async initializeWebSocket (): Promise<void> {
