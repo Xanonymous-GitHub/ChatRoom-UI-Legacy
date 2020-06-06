@@ -63,13 +63,10 @@
 import { Component, Provide, Vue } from 'nuxt-property-decorator'
 import API from '~/api/api'
 import { appStore } from '~/utils/store-accessor'
-import NuxtBuildIndicator from '~/.nuxt/components/nuxt-build-indicator.vue'
 import adminDataFetcher from '~/utils/adminDataFetcher'
 import { setJwtToLocalStorageWithExpire } from '~/utils/jwtTokenController'
 
-  @Component({
-    components: { NuxtBuildIndicator }
-  })
+  @Component({})
 export default class RootPage extends Vue {
     private loginRules = [
       (v: any) => !!v || 'required'
