@@ -85,10 +85,16 @@ export default class ChatRoom extends Vue {
     }
 
     private async initializeWebSocket (): Promise<void> {
+      console.log(ChatRoom.getWebSocketExtraHeaders())
       this.socket = io(process.env.WS_URL!, {
+        transportOptions: {
+          polling: {
+            extraHeaders: ChatRoom.getWebSocketExtraHeaders()
+          }
+        },
+        extraHeaders: ChatRoom.getWebSocketExtraHeaders(),
         autoConnect: false,
-        reconnectionAttempts: 20,
-        extraHeaders: ChatRoom.getWebSocketExtraHeaders
+        reconnectionAttempts: 20
       })
       this.socket.on('successfullyJoinedChatRoomOfMrCodingPlatformInNationalTaipeiUniversityOfTechnologyProgrammingClub', this.chatroomJoined)
       this.socket.on('message', this.receiveNewMsg)
