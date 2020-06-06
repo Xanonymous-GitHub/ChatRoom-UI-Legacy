@@ -11,7 +11,7 @@ export default class AppStore extends VuexModule {
     {
       _id: 'TeuId',
       username: 'TeU',
-      verified: false,
+      cc: false,
       avatar: 'https://cdn.vuetifyjs.com/images/profiles/marcus.jpg' // should be a base64
     }
 
@@ -19,7 +19,7 @@ export default class AppStore extends VuexModule {
     {
       _id: 'XanonymousId',
       username: 'Xanonymous',
-      verified: false,
+      cc: false,
       avatar: 'https://cdn.vuetifyjs.com/images/profiles/marcus.jpg' // should be a base64
     }
   ]
@@ -92,6 +92,13 @@ export default class AppStore extends VuexModule {
     return originalData
   }
 
+  @Action({ commit: 'SET_CURRENT_USER_JWT_TOKEN' })
+  setCurrentUserJwtToken (jwtToken: string) {
+    localStorage.setItem('jwtToken', jwtToken)
+    localStorage.setItem('jwtTokenExpireTime', (Date.now() + 20 * 86400 * 1000).toString())
+    return jwtToken
+  }
+
   get isDarkMode () {
     return this.themeMode === themeModes.DARK
   }
@@ -113,6 +120,17 @@ export default class AppStore extends VuexModule {
   }
 
   get getJwtKey () {
+    const currentUserJwtToken = localStorage.getItem('jwtToken')
+    const jwtExpireTime = parseInt(localStorage.getItem('jwtTokenExpireTime')!)
+    if (currentUserJwtToken) {
+      try {
+        if (jwtExpireTime && Date.now() < jwtExpireTime) {
+          this.currentUserJwtToken = JSON.parse(currentUserJwtToken)
+        }
+      } catch (e) {
+        localStorage.removeItem('jwtToken')
+      }
+    }
     return this.currentUserJwtToken
   }
 }

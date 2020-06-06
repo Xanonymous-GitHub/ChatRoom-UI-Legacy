@@ -25,7 +25,7 @@ export interface AdminType extends UserType {
   username: string, // admins' self-set name, or the line uuid of general users
   avatar?: string, // user avatar url(at the first time) => base64 path TODO avatar = await getBase64ImgPath(avatarUrl)
   info?: string, // user profile
-  verified: boolean // show that if the user is verified by us(dev team)
+  cc: boolean // show that if the user is verified by us(dev team)
 }
 
 export interface ChatRoomType {

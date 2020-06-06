@@ -124,9 +124,23 @@ export default class API {
     }
   }
 
-  static async getSpecifyAdminData (UserId: string): Promise<AdminType | ResponseErrorType> {
+  static async getSpecifyAdminDataById (UserId: string): Promise<AdminType | ResponseErrorType> {
     try {
       const { data } = await axios.get(`/users/${UserId}`)
+      return data
+    } catch (e) {
+      const status = e.response.status
+      return { error: status }
+    }
+  }
+
+  static async getSpecifyAdminDataByJwtToken (jwtToken: string): Promise<AdminType | ResponseErrorType> {
+    try {
+      const { data } = await axios.get('/users/me', {
+        headers: {
+          Authorization: 'bearer ' + jwtToken
+        }
+      })
       return data
     } catch (e) {
       const status = e.response.status
