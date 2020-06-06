@@ -88,11 +88,7 @@ export default class ChatRoom extends Vue {
       this.socket = io(process.env.WS_URL!, {
         autoConnect: false,
         reconnectionAttempts: 20,
-        transportOptions: {
-          polling: {
-            extraHeaders: ChatRoom.getWebSocketExtraHeaders
-          }
-        }
+        extraHeaders: ChatRoom.getWebSocketExtraHeaders
       })
       this.socket.on('successfullyJoinedChatRoomOfMrCodingPlatformInNationalTaipeiUniversityOfTechnologyProgrammingClub', this.chatroomJoined)
       this.socket.on('message', this.receiveNewMsg)

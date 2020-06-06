@@ -18,6 +18,7 @@ import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import Msg from '~/components/chatRoom/Msg.vue'
 import { appStore } from '~/utils/store-accessor'
 import { AdminType, UserType } from '~/store/types/appTypes'
+import API from '~/api/api'
 
   @Component({
     components: {
@@ -35,12 +36,25 @@ export default class MsgArea extends Vue {
       return appStore.getMessage[`${this.currentChatRoomId}`]
     }
 
-    private msgOwner (msgAuthor: string): (AdminType | UserType) {
+    private async msgOwner (msgAuthor: string): Promise<AdminType | UserType> {
       const currentUser = appStore.getCurrentUser
       if (msgAuthor === currentUser._id) {
         return currentUser
       }
-      return appStore.getOtherUsers.find(user => user._id === msgAuthor)!
+      let otherUser = appStore.getOtherUsers.find(user => user._id === msgAuthor)!
+      if (otherUser) {
+        return otherUser
+      } else {
+        otherUser = (await API.getSpecifyAdminDataById(msgAuthor)) as unknown as AdminType
+        if (otherUser) {
+          appStore.ADD_OTHER_USER(otherUser)
+          return otherUser
+        } else {
+          return {
+            _id: 'Unknown User'
+          }
+        }
+      }
     }
 }
 </script>

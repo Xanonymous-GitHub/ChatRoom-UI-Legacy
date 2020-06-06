@@ -7,7 +7,7 @@ import getBase64ImgPath from '~/utils/requestAvatar'
 export default class AppStore extends VuexModule {
   private themeMode = themeModes.AUTO;
 
-  private currentUser: AdminType | UserType={
+  private currentUser: AdminType | UserType = {
     _id: ''
   }
 
@@ -37,7 +37,15 @@ export default class AppStore extends VuexModule {
   }
 
   @Mutation
+  ADD_OTHER_USER (otherUser: UserType | AdminType) {
+    this.otherUsers.push(otherUser)
+  }
+
+  @Mutation
   CREATE_MSG ({ newMsg, chatroomID, insertPosition }: { newMsg: MessageType, chatroomID: string, insertPosition: number }) {
+    if (!this.messages[`${chatroomID}`]) {
+      this.messages[`${chatroomID}`] = []
+    }
     if (insertPosition) {
       this.messages[`${chatroomID}`].splice(insertPosition, 0, newMsg)
     } else {
