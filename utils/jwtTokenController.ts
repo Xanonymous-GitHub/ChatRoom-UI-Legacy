@@ -9,7 +9,7 @@ export async function getJwtTokenFromLocalStorage () {
   if (currentUserJwtToken) {
     try {
       if (jwtExpireTime && Date.now() < jwtExpireTime) {
-        return JSON.parse(currentUserJwtToken)
+        return currentUserJwtToken
       }
     } catch (e) {
       localStorage.removeItem('jwtToken')
