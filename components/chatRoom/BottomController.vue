@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar :dark="isDarkMode" app bottom class="bottom-controller">
+  <v-app-bar :dark="isDarkMode" app bottom>
     <MsgInput
       :current-chat-room-identify="currentChatRoomIdentify"
       @scrollMsgAreaToEnd="scrollMsgAreaToEnd"

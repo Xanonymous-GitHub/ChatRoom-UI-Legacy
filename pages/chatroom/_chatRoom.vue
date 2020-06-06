@@ -5,7 +5,7 @@
       ref="bottomController"
       :current-chat-room-identify="currentChatRoomId"
       :is-dark-mode="isDarkMode"
-      class="pa-3 chat-room--bottom chat-room--fixed"
+      class="chat-room--bottom"
       @scrollMsgAreaToEnd="scrollMsgAreaToEnd"
       @sendNewMsg="sendNewMsg"
     />
@@ -18,8 +18,9 @@ import BottomController from '@/components/chatRoom/BottomController.vue'
 import MsgArea from '@/components/chatRoom/MsgArea.vue'
 import { appStore } from '@/store'
 import io from '~/plugins/socket.io'
-import { MessageType } from '@/store/types/appTypes'
+import { ChatRoomType, MessageType } from '@/store/types/appTypes'
 import API from '~/api/api'
+import adminDataFetcher from '~/utils/adminDataFetcher'
 
   interface RefElement extends Element {
     $el?: {
@@ -36,17 +37,17 @@ import API from '~/api/api'
     }
   })
 export default class ChatRoom extends Vue {
-    private socket = io(process.env.WS_URL!, {
-      autoConnect: false,
-      reconnectionAttempts: 20,
-      transportOptions: {
-        polling: {
-          extraHeaders: this.getWebSocketExtraHeaders
-        }
-      }
-    })
+    private socket!: typeof io
 
-    get getWebSocketExtraHeaders () {
+    get isDarkMode () {
+      return appStore.isDarkMode
+    }
+
+    get currentChatRoomId () {
+      return appStore.getCurrentChatRoomId
+    }
+
+    private static getWebSocketExtraHeaders () {
       const extraHeaders: { userID?: string, Authorization?: string } = {}
       const jwtKey = appStore.getJwtKey
       if (jwtKey) {
@@ -57,25 +58,21 @@ export default class ChatRoom extends Vue {
       return extraHeaders
     }
 
-    get isDarkMode () {
-      return appStore.isDarkMode
-    }
-
-    get currentChatRoomId () {
-      return appStore.getCurrentChatRoomId
-    }
-
     // EntryPoint, step 1
     public async validate ({ params }: { params: any }) {
-      // find if there is a chatroom that id is equal to the params.
-      const chatRoom = await API.getSpecifyChatRoomData(params.chatRoom)
-      return ('error' in chatRoom) || (chatRoom._id === params.chatRoom) // TODO add custom error msg
+      const chatRoom = (await API.getSpecifyChatRoomData(params.chatRoom)) as ChatRoomType
+      return !('error' in chatRoom) || (chatRoom!._id === params.chatRoom) // TODO add custom error msg
     }
 
     // step 2
-    public beforeMount () {
+    public async beforeMount () {
       // set the current chatroom identify
       appStore.SET_CHATROOM_ID(this.$route.params.chatRoom)
+      // check if login
+      if (!await adminDataFetcher()) {
+        alert('please login!')
+        await this.$router.push('/')
+      }
     }
 
     // step 3
@@ -87,6 +84,15 @@ export default class ChatRoom extends Vue {
     }
 
     private async initializeWebSocket (): Promise<void> {
+      this.socket = io(process.env.WS_URL!, {
+        autoConnect: false,
+        reconnectionAttempts: 20,
+        transportOptions: {
+          polling: {
+            extraHeaders: ChatRoom.getWebSocketExtraHeaders
+          }
+        }
+      })
       this.socket.on('successfullyJoinedChatRoomOfMrCodingPlatformInNationalTaipeiUniversityOfTechnologyProgrammingClub', this.chatroomJoined)
       this.socket.on('message', this.receiveNewMsg)
       await this.socket.open() // connect to the server

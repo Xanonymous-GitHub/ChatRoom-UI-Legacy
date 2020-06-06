@@ -28,7 +28,12 @@
         />
         <p>{{ loginStatusMessages }}</p>
         <div class="main-field__buttons">
-          <v-btn :disabled="loginInProgress" color="success" small @click.exact.prevent.stop="login">
+          <v-btn
+            :disabled="!password||!username||loginInProgress"
+            color="success"
+            small
+            @click.exact.prevent.stop="login"
+          >
             LOGIN
           </v-btn>
         </div>
@@ -58,8 +63,9 @@
 import { Component, Provide, Vue } from 'nuxt-property-decorator'
 import API from '~/api/api'
 import { appStore } from '~/utils/store-accessor'
-import { AdminType } from '~/store/types/appTypes'
 import NuxtBuildIndicator from '~/.nuxt/components/nuxt-build-indicator.vue'
+import adminDataFetcher from '~/utils/adminDataFetcher'
+import { setJwtToLocalStorageWithExpire } from '~/utils/jwtTokenController'
 
   @Component({
     components: { NuxtBuildIndicator }
@@ -90,7 +96,7 @@ export default class RootPage extends Vue {
     }
 
     public mounted () {
-      this.obtainAdminData()
+      adminDataFetcher()
     }
 
     private async login () {
@@ -100,24 +106,18 @@ export default class RootPage extends Vue {
       this.username = ''
       this.password = ''
       if (token) {
+        await setJwtToLocalStorageWithExpire(token)
         appStore.setCurrentUserJwtToken(token)
-        await this.obtainAdminData(token)
+        if (await adminDataFetcher(token)) {
+          this.loginStatusMessages = ''
+          this.logged = true
+        } else {
+          this.loginStatusMessages = 'jwt validation failed'
+        }
       } else {
         this.loginStatusMessages = 'invalid user name or password!'
       }
       this.loginInProgress = false
-    }
-
-    private async obtainAdminData (key?: string) {
-      const token = key || appStore.getJwtKey
-      if (token) {
-        const admin = (await API.getSpecifyAdminDataByJwtToken(token)) as unknown as AdminType
-        if (!('error' in admin) && ('_id' in admin)) {
-          await appStore.setCurrentUser(admin)
-          this.loginStatusMessages = ''
-          this.logged = true
-        }
-      }
     }
 }
 </script>

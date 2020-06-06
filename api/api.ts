@@ -11,7 +11,7 @@ export default class API {
       const { data } = await axios.get(`/chatrooms/${chatRoomId}`)
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       return { error: status }
     }
   }
@@ -25,7 +25,7 @@ export default class API {
       })
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       return { error: status }
     }
   }
@@ -41,7 +41,7 @@ export default class API {
       })
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       if (status === 400) {
         return { error: 'duplicate room id' + status }
       }
@@ -60,7 +60,7 @@ export default class API {
       })
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       if (status === 404) {
         return { error: 'could not find the chatRoom' + status }
       }
@@ -79,7 +79,7 @@ export default class API {
       })
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       if (status === 404) {
         return { error: 'chatRoom not found' + status }
       }
@@ -106,7 +106,7 @@ export default class API {
       })
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       return { error: status }
     }
   }
@@ -119,7 +119,7 @@ export default class API {
       })
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       return { error: status }
     }
   }
@@ -129,7 +129,7 @@ export default class API {
       const { data } = await axios.get(`/users/${UserId}`)
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       return { error: status }
     }
   }
@@ -143,7 +143,7 @@ export default class API {
       })
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       return { error: status }
     }
   }
@@ -157,7 +157,7 @@ export default class API {
       })
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       return { error: status }
     }
   }
@@ -173,7 +173,7 @@ export default class API {
       })
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       if (status === 400) {
         return { error: 'cross-user-access denied.' + status }
       }
@@ -192,7 +192,7 @@ export default class API {
       })
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       if (status === 400) {
         return { error: 'cross-user-access denied.' + status }
       }
@@ -211,7 +211,7 @@ export default class API {
       })
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       if (status === 400) {
         return { error: 'cross-user-access denied.' + status }
       }

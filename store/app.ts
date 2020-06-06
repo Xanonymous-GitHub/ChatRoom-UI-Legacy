@@ -7,43 +7,20 @@ import getBase64ImgPath from '~/utils/requestAvatar'
 export default class AppStore extends VuexModule {
   private themeMode = themeModes.AUTO;
 
-  private currentUser: AdminType | UserType =
-    {
-      _id: 'TeuId',
-      username: 'TeU',
-      cc: false,
-      avatar: 'https://cdn.vuetifyjs.com/images/profiles/marcus.jpg' // should be a base64
-    }
+  private currentUser: AdminType | UserType={
+    _id: ''
+  }
 
   private otherUsers: Array<AdminType | UserType> = [
     {
-      _id: 'XanonymousId',
-      username: 'Xanonymous',
+      _id: '',
+      username: '',
       cc: false,
-      avatar: 'https://cdn.vuetifyjs.com/images/profiles/marcus.jpg' // should be a base64
+      avatar: ''
     }
   ]
 
-  private messages: MessageContainerType = {
-    abc: [
-      {
-        _id: '123',
-        author: 'XanonymousId',
-        read: false,
-        updateAt: 1591029484912,
-        context: 'this is a test message from xanonymous in room 123',
-        chatroomID: 'abc'
-      },
-      {
-        _id: '456',
-        author: 'TeuId',
-        read: true,
-        updateAt: 1591029503976,
-        context: 'this is also a test message from Teu in room 123',
-        chatroomID: 'abc'
-      }
-    ]
-  }
+  private messages: MessageContainerType = {}
 
   private currentChatRoomId: string = ''
 
@@ -94,8 +71,6 @@ export default class AppStore extends VuexModule {
 
   @Action({ commit: 'SET_CURRENT_USER_JWT_TOKEN' })
   setCurrentUserJwtToken (jwtToken: string) {
-    localStorage.setItem('jwtToken', jwtToken)
-    localStorage.setItem('jwtTokenExpireTime', (Date.now() + 20 * 86400 * 1000).toString())
     return jwtToken
   }
 
@@ -120,17 +95,6 @@ export default class AppStore extends VuexModule {
   }
 
   get getJwtKey () {
-    const currentUserJwtToken = localStorage.getItem('jwtToken')
-    const jwtExpireTime = parseInt(localStorage.getItem('jwtTokenExpireTime')!)
-    if (currentUserJwtToken) {
-      try {
-        if (jwtExpireTime && Date.now() < jwtExpireTime) {
-          this.currentUserJwtToken = JSON.parse(currentUserJwtToken)
-        }
-      } catch (e) {
-        localStorage.removeItem('jwtToken')
-      }
-    }
     return this.currentUserJwtToken
   }
 }
