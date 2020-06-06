@@ -51,7 +51,7 @@ export default class ChatRoom extends Vue {
       const extraHeaders: { userID?: string, authorization?: string } = {}
       const jwtKey = appStore.getJwtKey
       if (jwtKey) {
-        extraHeaders.authorization = 'bearer' + jwtKey
+        extraHeaders.authorization = 'bearer ' + jwtKey
       } else {
         extraHeaders.userID = appStore.getCurrentUser._id
       }
@@ -85,7 +85,6 @@ export default class ChatRoom extends Vue {
     }
 
     private async initializeWebSocket (): Promise<void> {
-      console.log(ChatRoom.getWebSocketExtraHeaders())
       this.socket = io(process.env.WS_URL!, {
         transportOptions: {
           polling: {
