@@ -136,7 +136,7 @@ export default class API {
 
   static async getSpecifyAdminDataByJwtToken (jwtToken: string): Promise<AdminType | ResponseErrorType> {
     try {
-      const { data } = await axios.get('/users/me', {
+      const { data } = await axios.get('/me', {
         headers: {
           authorization: 'bearer ' + jwtToken
         }
