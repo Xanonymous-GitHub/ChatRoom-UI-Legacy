@@ -48,10 +48,10 @@ export default class ChatRoom extends Vue {
     }
 
     private static getWebSocketExtraHeaders () {
-      const extraHeaders: { userID?: string, Authorization?: string } = {}
+      const extraHeaders: { userID?: string, authorization?: string } = {}
       const jwtKey = appStore.getJwtKey
       if (jwtKey) {
-        extraHeaders.Authorization = jwtKey
+        extraHeaders.authorization = 'bearer' + jwtKey
       } else {
         extraHeaders.userID = appStore.getCurrentUser._id
       }

@@ -20,7 +20,7 @@ export default class API {
     try {
       const { data } = await axios.get('/chatrooms', {
         headers: {
-          Authorization: 'bearer ' + jwtToken
+          authorization: 'bearer ' + jwtToken
         }
       })
       return data
@@ -36,7 +36,7 @@ export default class API {
         identify
       }, {
         headers: {
-          Authorization: uniqueToken
+          authorization: uniqueToken
         }
       })
       return data
@@ -55,7 +55,7 @@ export default class API {
         lineAccessToken
       }, {
         headers: {
-          Authorization: lineUserId
+          authorization: lineUserId
         }
       })
       return data
@@ -74,7 +74,7 @@ export default class API {
         closed
       }, {
         headers: {
-          Authorization: 'bearer ' + jwtToken
+          authorization: 'bearer ' + jwtToken
         }
       })
       return data
@@ -89,9 +89,9 @@ export default class API {
 
   static async getHistoryMessages (chatRoomId: string, number: number, jwtToken: string, lineUserId: string, lastTime?: number): Promise<Array<MessageType> | ResponseErrorType> {
     try {
-      const header: { Authorization?: string, userID?: string } = {}
+      const header: { authorization?: string, userID?: string } = {}
       if (jwtToken) {
-        header.Authorization = 'bearer ' + jwtToken
+        header.authorization = 'bearer ' + jwtToken
       } else if (lineUserId) {
         header.userID = lineUserId
       }
@@ -138,7 +138,7 @@ export default class API {
     try {
       const { data } = await axios.get('/users/me', {
         headers: {
-          Authorization: 'bearer ' + jwtToken
+          authorization: 'bearer ' + jwtToken
         }
       })
       return data
@@ -152,7 +152,7 @@ export default class API {
     try {
       const { data } = await axios.get('/users', {
         headers: {
-          Authorization: 'bearer ' + jwtToken
+          authorization: 'bearer ' + jwtToken
         }
       })
       return data
@@ -168,7 +168,7 @@ export default class API {
         info
       }, {
         headers: {
-          Authorization: 'bearer ' + jwtToken
+          authorization: 'bearer ' + jwtToken
         }
       })
       return data
