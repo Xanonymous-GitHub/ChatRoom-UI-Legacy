@@ -17,7 +17,7 @@
   }
 
   &__chatroom-selection-field {
-    @extend &__login-field;
+    @extend .main-field__login-field;
   }
 
   &__buttons {

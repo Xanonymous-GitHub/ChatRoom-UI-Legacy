@@ -44,7 +44,7 @@
         />
         <div class="main-field__buttons">
           <nuxt-link :to="getWhereToGo">
-            <v-btn color="primary" small @click.exact.prevent.stop="login">
+            <v-btn color="primary" small>
               GO THIS ROOM
             </v-btn>
           </nuxt-link>
