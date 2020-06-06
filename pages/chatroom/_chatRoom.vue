@@ -3,7 +3,7 @@
     <MsgArea ref="msgArea" :current-chat-room-id="currentChatRoomId" :is-dark-mode="isDarkMode" />
     <BottomController
       ref="bottomController"
-      :current-chat-room-identify="currentChatRoomId"
+      :current-chat-room-id="currentChatRoomId"
       :is-dark-mode="isDarkMode"
       class="chat-room--bottom"
       @scrollMsgAreaToEnd="scrollMsgAreaToEnd"

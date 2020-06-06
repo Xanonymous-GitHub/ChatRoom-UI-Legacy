@@ -37,7 +37,7 @@ export default class MsgInput extends Vue {
     private textContent = ''
 
     @Prop({ required: true })
-    private currentChatRoomIdentify!: string
+    private currentChatRoomId!: string
 
     @Emit('scrollMsgAreaToEnd')
     @Emit('sendNewMsg')
@@ -51,9 +51,9 @@ export default class MsgInput extends Vue {
           author: appStore.getCurrentUser._id,
           updateAt: Date.now(),
           context: textContext,
-          chatroomID: this.currentChatRoomIdentify
+          chatroomID: this.currentChatRoomId
         }
-        appStore.createMsg({ newMsg, chatroomID: this.currentChatRoomIdentify })
+        // appStore.createMsg({ newMsg, chatroomID: this.currentChatRoomId })
         return newMsg
       }
     }

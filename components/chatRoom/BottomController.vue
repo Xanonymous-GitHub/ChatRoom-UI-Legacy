@@ -1,7 +1,7 @@
 <template>
   <v-app-bar :dark="isDarkMode" app bottom>
     <MsgInput
-      :current-chat-room-identify="currentChatRoomIdentify"
+      :current-chat-room-id="currentChatRoomId"
       @scrollMsgAreaToEnd="scrollMsgAreaToEnd"
       @sendNewMsg="sendNewMsg"
     />
@@ -23,7 +23,7 @@ export default class BottomController extends Vue {
     private isDarkMode!: boolean;
 
     @Prop({ required: true })
-    private currentChatRoomIdentify!: string
+    private currentChatRoomId!: string
 
     @Emit('scrollMsgAreaToEnd')
     private scrollMsgAreaToEnd () {
