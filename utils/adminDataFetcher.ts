@@ -7,10 +7,14 @@ export default async function (key?: string) {
   const token = key || appStore.getJwtKey || await getJwtTokenFromLocalStorage()
   if (token) {
     appStore.setCurrentUserJwtToken(token)
-    const admin = (await API.getSpecifyAdminDataByJwtToken(token)) as unknown as AdminType
-    if (admin && !('error' in admin) && ('_id' in admin)) {
-      await appStore.setCurrentUser(admin)
-      return true
+    try {
+      const admin = (await API.getSpecifyAdminDataByJwtToken(token)) as unknown as AdminType
+      if (admin && !('error' in admin) && ('_id' in admin)) {
+        await appStore.setCurrentUser(admin)
+        return true
+      }
+    } catch (e) {
+      return false
     }
   }
   return false
