@@ -53,12 +53,17 @@ export default class AppStore extends VuexModule {
   @Mutation
   SET_CHATROOM_ID (id: string) {
     this.currentChatRoomId = id
-    this.messages[`${id}`] = []
+    this.INIT_MESSAGE_CONTAINER(id)
   }
 
   @Mutation
   SET_CURRENT_USER_JWT_TOKEN (jwtToken: string) {
     this.currentUserJwtToken = jwtToken
+  }
+
+  @Mutation
+  INIT_MESSAGE_CONTAINER (chatRoomId: string) {
+    this.messages[`${chatRoomId}`] = []
   }
 
   @Action({ commit: 'CREATE_MSG' })
