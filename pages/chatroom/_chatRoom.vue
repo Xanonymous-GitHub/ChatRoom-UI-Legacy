@@ -18,7 +18,7 @@ import BottomController from '@/components/chatRoom/BottomController.vue'
 import MsgArea from '@/components/chatRoom/MsgArea.vue'
 import { appStore } from '@/store'
 import io from '~/plugins/socket.io'
-import { ChatRoomType, MessageType } from '@/store/types/appTypes'
+import { MessageType } from '@/store/types/appTypes'
 import API from '~/api/api'
 import adminDataFetcher from '~/utils/adminDataFetcher'
 
@@ -58,9 +58,14 @@ export default class ChatRoom extends Vue {
       return extraHeaders
     }
 
+    private static webSocketException (e: any) {
+      alert(e.message)
+    }
+
     // EntryPoint, step 1
-    public async asyncData ({ params, error }: { params: any, error: any }) {
-      const chatRoom = (await API.getSpecifyChatRoomData(params.chatRoom)) as ChatRoomType
+    public async asyncData ({ params, error, $axios }: { params: any, error: any, $axios: any }) {
+      const chatRoom = (await API.getSpecifyChatRoomData(params.chatRoom, $axios)) as any
+      console.log(chatRoom)
       if (('error' in chatRoom) || (chatRoom!._id !== params.chatRoom)) {
         error({ statusCode: 404, message: 'no such chatroom exist!' })
       }
@@ -99,6 +104,7 @@ export default class ChatRoom extends Vue {
       })
       this.socket.on('successfullyJoinedChatRoomOfMrCodingPlatformInNationalTaipeiUniversityOfTechnologyProgrammingClub', this.chatroomJoined)
       this.socket.on('message', this.receiveNewMsg)
+      this.socket.on('exception', ChatRoom.webSocketException)
       await this.socket.open() // connect to the server
       this.socket.emit('join', this.currentChatRoomId)
     }

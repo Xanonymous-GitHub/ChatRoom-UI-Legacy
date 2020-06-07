@@ -6,10 +6,10 @@ axios.defaults.baseURL = '/api'
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
 
 export default class API {
-  static async getSpecifyChatRoomData (chatRoomId: string): Promise<ChatRoomType | ResponseErrorType> {
+  static async getSpecifyChatRoomData (chatRoomId: string, $axios?: any): Promise<ChatRoomType | ResponseErrorType> {
     try {
       console.log(1)
-      const { data } = await axios.get(`/chatrooms/${chatRoomId}`)
+      const { data } = await ($axios || axios).get(`/chatrooms/${chatRoomId}`)
       console.log(2)
       return data
     } catch (e) {
