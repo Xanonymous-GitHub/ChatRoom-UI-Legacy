@@ -1,6 +1,7 @@
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 import { MessageType, themeModes, AdminType, MessageContainerType, UserType } from '~/store/types/appTypes'
 import getBase64ImgPath from '~/utils/requestAvatar'
+import API from '~/api/api'
 
 @Module({ name: 'app', stateFactory: true, namespaced: true })
 export default class AppStore extends VuexModule {
@@ -60,10 +61,19 @@ export default class AppStore extends VuexModule {
   }
 
   @Action({ commit: 'CREATE_MSG' })
-  createMsg ({ newMsg, chatroomID, insertPosition }: { newMsg: MessageType, chatroomID: string, insertPosition?: (number | undefined) }) {
+  async createMsg ({ newMsg, chatroomID, insertPosition }: { newMsg: MessageType, chatroomID: string, insertPosition?: (number | undefined) }) {
     if (!this.messages[`${chatroomID}`]) {
       this.messages[`${chatroomID}`] = []
-      console.log(this.messages[`${chatroomID}`])
+    }
+    const currentUser = this.getCurrentUser
+    if (newMsg.author !== currentUser._id) {
+      let otherUser = this.getOtherUsers.find(user => user._id === newMsg.author)!
+      if (!otherUser) {
+        otherUser = (await API.getSpecifyAdminDataById(newMsg.author)) as unknown as AdminType
+        if (otherUser) {
+          await this.addOtherUser(otherUser)
+        }
+      }
     }
     return { newMsg, chatroomID, insertPosition }
   }

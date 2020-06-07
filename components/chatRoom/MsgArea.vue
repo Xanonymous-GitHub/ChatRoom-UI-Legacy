@@ -4,7 +4,7 @@
     class="msg-area msg-area--full-height"
   >
     <Msg
-      v-for="(message, index) in messages"
+      v-for="(message, index) of messages"
       :key="index"
       :is-dark-mode="isDarkMode"
       :msg-setup="{...message}"
@@ -17,8 +17,6 @@
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import Msg from '~/components/chatRoom/Msg.vue'
 import { appStore } from '~/utils/store-accessor'
-import { AdminType, UserType } from '~/store/types/appTypes'
-import API from '~/api/api'
 
   @Component({
     components: {
@@ -36,26 +34,12 @@ export default class MsgArea extends Vue {
       return appStore.getMessage[`${this.currentChatRoomId}`]
     }
 
-    private async msgOwner (msgAuthor: string): Promise<AdminType | UserType> {
-      console.log(msgAuthor)
+    private msgOwner (msgAuthor: string) {
       const currentUser = appStore.getCurrentUser
       if (msgAuthor === currentUser._id) {
         return currentUser
       }
-      let otherUser = appStore.getOtherUsers.find(user => user._id === msgAuthor)!
-      if (otherUser) {
-        return otherUser
-      } else {
-        otherUser = (await API.getSpecifyAdminDataById(msgAuthor)) as unknown as AdminType
-        if (otherUser) {
-          await appStore.addOtherUser(otherUser)
-          return otherUser
-        } else {
-          return {
-            _id: 'Unknown User'
-          }
-        }
-      }
+      return appStore.getOtherUsers.find(user => user._id === msgAuthor)!
     }
 }
 </script>
