@@ -1,5 +1,5 @@
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
-import { MessageType, themeModes, AdminType, UserType } from '~/store/types/appTypes'
+import { MessageType, themeModes, AdminType, UserType, MessageContainerType } from '~/store/types/appTypes'
 import getBase64ImgPath from '~/utils/requestAvatar'
 import API from '~/api/api'
 
@@ -20,7 +20,7 @@ export default class AppStore extends VuexModule {
     }
   ]
 
-  private messages: Array<MessageType> = []
+  private messages: MessageContainerType = { chatroom: [] }
 
   private currentChatRoomId: string = ''
 
@@ -44,9 +44,9 @@ export default class AppStore extends VuexModule {
   @Mutation
   CREATE_MSG ({ newMsg, insertPosition }: { newMsg: MessageType, insertPosition: number }) {
     if (insertPosition) {
-      this.messages.splice(insertPosition, 0, newMsg)
+      this.messages.chatroom.splice(insertPosition, 0, newMsg)
     } else {
-      this.messages.push(newMsg)
+      this.messages.chatroom.push(newMsg)
     }
   }
 

@@ -30,13 +30,9 @@ export default class MsgArea extends Vue {
     @Prop({ required: true })
     private currentChatRoomId!: string
 
-    public mounted () {
-      this.$forceUpdate()
-    }
-
     @ProvideReactive()
     private messages () {
-      return appStore.getMessage
+      return appStore.getMessage.chatroom
     }
 
     private msgOwner (msgAuthor: string) {
