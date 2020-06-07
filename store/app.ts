@@ -53,7 +53,7 @@ export default class AppStore extends VuexModule {
   @Mutation
   SET_CHATROOM_ID (id: string) {
     this.currentChatRoomId = id
-    this.messages[`${this.currentChatRoomId}`] = []
+    this.messages[`${id}`] = []
   }
 
   @Mutation

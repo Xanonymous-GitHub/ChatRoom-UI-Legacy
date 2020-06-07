@@ -42,9 +42,7 @@ export default class MsgInput extends Vue {
     private sendMessage () {
       const textContext = this.textContent.trim()
       this.textContent = ''
-      if (textContext) {
-        return textContext
-      }
+      return textContext
     }
 }
 </script>

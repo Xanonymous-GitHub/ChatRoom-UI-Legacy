@@ -65,7 +65,6 @@ export default class ChatRoom extends Vue {
     // EntryPoint, step 1
     public async asyncData ({ params, error }: { params: any, error: any, $axios: any }) {
       const chatRoom = (await API.getSpecifyChatRoomData(params.chatRoom)) as any
-      console.log(chatRoom)
       if (('error' in chatRoom) || (chatRoom!._id !== params.chatRoom)) {
         error({ statusCode: 404, message: 'no such chatroom exist!' })
       }
@@ -116,7 +115,6 @@ export default class ChatRoom extends Vue {
 
     private async receiveNewMsg (newMsg: MessageType) {
       await appStore.createMsg({ newMsg, chatroomID: this.currentChatRoomId })
-      console.log(appStore.getMessage)
     }
 
     private sendNewMsg (newMsg: string) {
