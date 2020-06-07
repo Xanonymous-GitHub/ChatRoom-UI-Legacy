@@ -35,7 +35,7 @@ export default class MsgArea extends Vue {
     }
 
     @ProvideReactive()
-    get messages () {
+    private messages () {
       return appStore.getMessage[`${this.currentChatRoomId}`]
     }
 
