@@ -86,6 +86,8 @@ export default class ChatRoom extends Vue {
         alert('please login!')
         await this.$router.push('/')
       } else {
+        // create chatRoom storage space for reactive detections.
+
         // register the new msg event.
         await this.initializeWebSocket() // TODO add reconnection methods after connection failed
       }

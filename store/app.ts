@@ -20,11 +20,7 @@ export default class AppStore extends VuexModule {
     }
   ]
 
-  private messages: MessageContainerType = {
-    '5edb70c2db6fdff93f23d71e': [
-
-    ]
-  }
+  private messages: MessageContainerType = {}
 
   private currentChatRoomId: string = ''
 
@@ -57,6 +53,7 @@ export default class AppStore extends VuexModule {
   @Mutation
   SET_CHATROOM_ID (id: string) {
     this.currentChatRoomId = id
+    this.messages[`${this.currentChatRoomId}`] = []
   }
 
   @Mutation
@@ -66,9 +63,6 @@ export default class AppStore extends VuexModule {
 
   @Action({ commit: 'CREATE_MSG' })
   async createMsg ({ newMsg, chatroomID, insertPosition }: { newMsg: MessageType, chatroomID: string, insertPosition?: (number | undefined) }) {
-    if (!this.messages[`${chatroomID}`]) {
-      this.messages[`${chatroomID}`] = []
-    }
     const currentUser = this.getCurrentUser
     if (newMsg.author !== currentUser._id) {
       let otherUser = this.getOtherUsers.find(user => user._id === newMsg.author)!
