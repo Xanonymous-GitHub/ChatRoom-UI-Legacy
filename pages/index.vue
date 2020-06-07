@@ -49,7 +49,7 @@
         />
         <div class="main-field__buttons">
           <nuxt-link :to="getWhereToGo">
-            <v-btn color="primary" small>
+            <v-btn color="primary" small :disabled="!chatroomToGo">
               GO THIS ROOM
             </v-btn>
           </nuxt-link>
@@ -89,13 +89,16 @@ export default class RootPage extends Vue {
     private chatroomToGo = ''
 
     get getWhereToGo () {
-      return '/chatroom/' + this.chatroomToGo
+      return '/chatroom/' + this.chatroomToGo.trim()
     }
 
     public async beforeMount () {
       if (await adminDataFetcher()) {
         this.loginStatusMessages = ''
-        this.logged = true
+        await new Promise((resolve) => {
+          this.logged = true
+          resolve()
+        })
       }
     }
 
