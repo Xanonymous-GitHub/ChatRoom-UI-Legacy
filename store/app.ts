@@ -53,7 +53,6 @@ export default class AppStore extends VuexModule {
   @Mutation
   SET_CHATROOM_ID (id: string) {
     this.currentChatRoomId = id
-    this.INIT_MESSAGE_CONTAINER(id)
   }
 
   @Mutation
