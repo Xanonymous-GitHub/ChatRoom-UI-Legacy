@@ -101,7 +101,7 @@ export default class AppStore extends VuexModule {
 
   @Action({ commit: 'ADD_OTHER_USER' })
   async addOtherUser (originalData: UserType | AdminType) {
-    if ('avatar' in originalData) {
+    if (originalData && 'avatar' in originalData && originalData.avatar) {
       originalData.avatar = await getBase64ImgPath(originalData.avatar!)
     }
     return originalData
