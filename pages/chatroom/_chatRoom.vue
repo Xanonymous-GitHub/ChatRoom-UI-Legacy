@@ -117,7 +117,7 @@ export default class ChatRoom extends Vue {
       console.log(newMsg)
     }
 
-    private sendNewMsg (newMsg: MessageType) {
+    private sendNewMsg (newMsg: string) {
       this.socket.emit('message', newMsg)
     }
 

@@ -1,6 +1,5 @@
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 import { MessageType, themeModes, AdminType, MessageContainerType, UserType } from '~/store/types/appTypes'
-import uuid from '~/utils/uuid'
 import getBase64ImgPath from '~/utils/requestAvatar'
 
 @Module({ name: 'app', stateFactory: true, namespaced: true })

@@ -28,8 +28,6 @@
 
 <script lang="ts">
 import { Component, Provide, Vue, Emit, Prop } from 'nuxt-property-decorator'
-import { appStore } from '~/utils/store-accessor'
-import { MessageType } from '@/store/types/appTypes'
 
   @Component
 export default class MsgInput extends Vue {
@@ -45,16 +43,7 @@ export default class MsgInput extends Vue {
       const textContext = this.textContent.trim()
       this.textContent = ''
       if (textContext) {
-        const newMsg: MessageType = {
-          _id: 'this will generate by backend server.',
-          read: false,
-          author: appStore.getCurrentUser._id,
-          updateAt: Date.now(),
-          context: textContext,
-          chatroomID: this.currentChatRoomId
-        }
-        // appStore.createMsg({ newMsg, chatroomID: this.currentChatRoomId })
-        return newMsg
+        return textContext
       }
     }
 }
