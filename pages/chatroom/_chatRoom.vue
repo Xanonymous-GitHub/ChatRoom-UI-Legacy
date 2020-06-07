@@ -59,9 +59,9 @@ export default class ChatRoom extends Vue {
     }
 
     // EntryPoint, step 1
-    public async asyncData ({ params, error }: { params:any, error:any}) {
+    public async asyncData ({ params, error }: { params: any, error: any }) {
       const chatRoom = (await API.getSpecifyChatRoomData(params.chatRoom)) as ChatRoomType
-      if (!('error' in chatRoom) || (chatRoom!._id === params.chatRoom)) {
+      if (('error' in chatRoom) || (chatRoom!._id !== params.chatRoom)) {
         error({ statusCode: 404, message: 'no such chatroom exist!' })
       }
     }

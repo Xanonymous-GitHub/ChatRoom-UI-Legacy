@@ -48,11 +48,9 @@
           solo-inverted
         />
         <div class="main-field__buttons">
-          <nuxt-link :to="getWhereToGo">
-            <v-btn color="primary" small :disabled="!chatroomToGo">
-              GO THIS ROOM
-            </v-btn>
-          </nuxt-link>
+          <v-btn color="primary" small :disabled="!chatroomToGo" :to="getWhereToGo">
+            GO THIS ROOM
+          </v-btn>
         </div>
       </div>
     </div>
