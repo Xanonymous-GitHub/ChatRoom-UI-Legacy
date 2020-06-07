@@ -1,25 +1,14 @@
 import axios from 'axios'
-// @ts-ignore
-import * as tunnel from 'tunnel'
 import { ChatRoomType, MessageType, AdminType } from '~/store/types/appTypes'
 import { ResponseErrorType } from '~/store/types/apiTypes'
 
-// @ts-ignore
-const tunnelAgent = tunnel.httpsOverHttp({
-  proxy: {
-    host: 'mrcoding.org',
-    port: 443
-  }
-})
-
 axios.defaults.baseURL = '/api'
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
-axios.defaults.httpsAgent = tunnelAgent
 
 export default class API {
   static async getSpecifyChatRoomData (chatRoomId: string): Promise<ChatRoomType | ResponseErrorType> {
     try {
-      const { data } = await axios.get(`/chatrooms/${chatRoomId}:443`)
+      const { data } = await axios.get(`https://mrcoding.org/api/chatrooms/${chatRoomId}`)
       return data
     } catch (e) {
       console.log(e)
