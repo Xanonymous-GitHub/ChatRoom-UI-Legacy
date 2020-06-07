@@ -8,7 +8,7 @@ export default async function (key?: string) {
   if (token) {
     appStore.setCurrentUserJwtToken(token)
     const admin = (await API.getSpecifyAdminDataByJwtToken(token)) as unknown as AdminType
-    if (!('error' in admin) && ('_id' in admin)) {
+    if (admin && !('error' in admin) && ('_id' in admin)) {
       await appStore.setCurrentUser(admin)
       return true
     }
