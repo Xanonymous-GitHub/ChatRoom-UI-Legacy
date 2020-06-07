@@ -42,9 +42,6 @@ export default class AppStore extends VuexModule {
 
   @Mutation
   CREATE_MSG ({ newMsg, chatroomID, insertPosition }: { newMsg: MessageType, chatroomID: string, insertPosition: number }) {
-    if (!this.messages[`${chatroomID}`]) {
-      this.messages[`${chatroomID}`] = []
-    }
     if (insertPosition) {
       this.messages[`${chatroomID}`].splice(insertPosition, 0, newMsg)
     } else {
@@ -64,6 +61,10 @@ export default class AppStore extends VuexModule {
 
   @Action({ commit: 'CREATE_MSG' })
   createMsg ({ newMsg, chatroomID, insertPosition }: { newMsg: MessageType, chatroomID: string, insertPosition?: (number | undefined) }) {
+    if (!this.messages[`${chatroomID}`]) {
+      this.messages[`${chatroomID}`] = []
+      console.log(this.messages[`${chatroomID}`])
+    }
     return { newMsg, chatroomID, insertPosition }
   }
 
