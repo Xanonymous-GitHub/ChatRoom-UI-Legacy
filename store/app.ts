@@ -65,7 +65,6 @@ export default class AppStore extends VuexModule {
 
   @Action({ commit: 'CREATE_MSG' })
   createMsg ({ newMsg, chatroomID, insertPosition }: { newMsg: MessageType, chatroomID: string, insertPosition?: (number | undefined) }) {
-    newMsg._id = uuid() // actually from TODO -> server.
     return { newMsg, chatroomID, insertPosition }
   }
 

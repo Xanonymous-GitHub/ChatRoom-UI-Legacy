@@ -114,6 +114,7 @@ export default class ChatRoom extends Vue {
 
     private receiveNewMsg (newMsg: MessageType) {
       appStore.createMsg({ newMsg, chatroomID: this.currentChatRoomId })
+      console.log(newMsg)
     }
 
     private sendNewMsg (newMsg: MessageType) {

@@ -37,6 +37,7 @@ export default class MsgArea extends Vue {
     }
 
     private async msgOwner (msgAuthor: string): Promise<AdminType | UserType> {
+      console.log(msgAuthor)
       const currentUser = appStore.getCurrentUser
       if (msgAuthor === currentUser._id) {
         return currentUser
