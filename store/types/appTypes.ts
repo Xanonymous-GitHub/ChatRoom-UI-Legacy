@@ -8,6 +8,7 @@ export enum themeModes {
 }
 
 export interface MessageType {
+  _v?: any // unknown thing
   _id: string, // mongoose id, absolutely unique
   author: string, // user's [_id]
   read: boolean, // show that if this is read by someone (the other user in same chatRoom)
