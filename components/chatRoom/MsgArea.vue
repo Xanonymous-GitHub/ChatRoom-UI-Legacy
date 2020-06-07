@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import { Component, Vue, Prop, ProvideReactive } from 'nuxt-property-decorator'
 import Msg from '~/components/chatRoom/Msg.vue'
 import { appStore } from '~/utils/store-accessor'
 
@@ -30,6 +30,7 @@ export default class MsgArea extends Vue {
     @Prop({ required: true })
     private currentChatRoomId!: string
 
+    @ProvideReactive()
     get messages () {
       return appStore.getMessage[`${this.currentChatRoomId}`]
     }
