@@ -8,10 +8,14 @@ axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
 export default class API {
   static async getSpecifyChatRoomData (chatRoomId: string, $axios?: any): Promise<ChatRoomType | ResponseErrorType> {
     try {
-      console.log(1)
-      const { data } = await ($axios || axios).get(`/chatrooms/${chatRoomId}`)
-      console.log(2)
-      return data
+      if ($axios) {
+        $axios.setBaseURL('https://mrcoding.org/api')
+        const { data } = await $axios.$get(`/chatrooms/${chatRoomId}`)
+        return data
+      } else {
+        const { data } = await axios.get(`/chatrooms/${chatRoomId}`)
+        return data
+      }
     } catch (e) {
       console.log(e)
       const status = e.response
