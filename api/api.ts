@@ -8,7 +8,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
 export default class API {
   static async getSpecifyChatRoomData (chatRoomId: string): Promise<ChatRoomType | ResponseErrorType> {
     try {
-      const { data } = await axios.get(`/chatrooms/${chatRoomId}`)
+      const { data } = await axios.get(`/chatrooms/${chatRoomId}:443`)
       return data
     } catch (e) {
       const status = e.response

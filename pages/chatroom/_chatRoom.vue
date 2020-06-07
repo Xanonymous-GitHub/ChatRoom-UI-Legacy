@@ -113,7 +113,6 @@ export default class ChatRoom extends Vue {
 
     private static async receiveNewMsg (newMsg: MessageType) {
       await appStore.createMsg({ newMsg })
-      console.log(appStore.getMessage)
     }
 
     private sendNewMsg (newMsg: string) {
