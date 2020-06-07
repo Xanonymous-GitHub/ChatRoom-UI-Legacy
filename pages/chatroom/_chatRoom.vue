@@ -112,12 +112,15 @@ export default class ChatRoom extends Vue {
     private chatroomJoined () {
     }
 
-    private receiveNewMsg (newMsg: MessageType) {
-      appStore.createMsg({ newMsg, chatroomID: this.currentChatRoomId })
+    private async receiveNewMsg (newMsg: MessageType) {
+      await appStore.createMsg({ newMsg, chatroomID: this.currentChatRoomId })
+      console.log(appStore.getMessage)
     }
 
     private sendNewMsg (newMsg: string) {
-      this.socket.emit('message', newMsg)
+      if (newMsg) {
+        this.socket.emit('message', newMsg.trim())
+      }
     }
 
     private setMsgAreaPadding () {
