@@ -31,6 +31,7 @@ export default class MsgArea extends Vue {
     private currentChatRoomId!: string
 
     get messages () {
+      console.log(this.currentChatRoomId)
       return appStore.getMessage[`${this.currentChatRoomId}`]
     }
 
