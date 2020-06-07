@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 import { MessageType, themeModes, AdminType, MessageContainerType, UserType } from '~/store/types/appTypes'
 import getBase64ImgPath from '~/utils/requestAvatar'
@@ -63,6 +64,7 @@ export default class AppStore extends VuexModule {
 
   @Mutation
   INIT_MESSAGE_CONTAINER (chatRoomId: string) {
+    Vue.set(this.messages, `${chatRoomId}`, [])
     this.messages[`${chatRoomId}`] = []
   }
 
