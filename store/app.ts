@@ -63,7 +63,9 @@ export default class AppStore extends VuexModule {
 
   @Mutation
   INIT_MESSAGE_CONTAINER (chatRoomId: string) {
-    this.messages[`${chatRoomId}`] = []
+    if (!this.messages[`${chatRoomId}`]) {
+      this.messages[`${chatRoomId}`] = []
+    }
   }
 
   @Action({ commit: 'CREATE_MSG' })
