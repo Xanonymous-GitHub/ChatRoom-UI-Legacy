@@ -11,7 +11,6 @@ export default class API {
       const { data } = await axios.get(`/chatrooms/${chatRoomId}`)
       return data
     } catch (e) {
-      console.log(e)
       const status = e.response
       return { error: status }
     }

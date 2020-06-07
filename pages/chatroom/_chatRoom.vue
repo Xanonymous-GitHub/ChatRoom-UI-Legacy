@@ -70,11 +70,6 @@ export default class ChatRoom extends Vue {
       }
     }
 
-    public async fetch () {
-      await appStore.initMessageContainer(this.$route.params.chatRoom)
-      console.log(appStore.getMessage)
-    }
-
     // step 2
     public beforeMount () {
       // set the current chatroom identify
@@ -109,7 +104,7 @@ export default class ChatRoom extends Vue {
         reconnectionAttempts: 20
       })
       this.socket.on('successfullyJoinedChatRoomOfMrCodingPlatformInNationalTaipeiUniversityOfTechnologyProgrammingClub', this.chatroomJoined)
-      this.socket.on('message', this.receiveNewMsg)
+      this.socket.on('message', ChatRoom.receiveNewMsg)
       this.socket.on('exception', ChatRoom.webSocketException)
       await this.socket.open() // connect to the server
       this.socket.emit('join', this.currentChatRoomId)
@@ -118,8 +113,8 @@ export default class ChatRoom extends Vue {
     private chatroomJoined () {
     }
 
-    private async receiveNewMsg (newMsg: MessageType) {
-      await appStore.createMsg({ newMsg, chatroomID: this.currentChatRoomId })
+    private static async receiveNewMsg (newMsg: MessageType) {
+      await appStore.createMsg({ newMsg })
     }
 
     private sendNewMsg (newMsg: string) {

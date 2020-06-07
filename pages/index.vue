@@ -48,7 +48,7 @@
           solo-inverted
         />
         <div class="main-field__buttons">
-          <v-btn color="primary" small :disabled="!chatroomToGo" :to="getWhereToGo" @click="initChatRoomStorage">
+          <v-btn color="primary" small :disabled="!chatroomToGo" :to="getWhereToGo">
             GO THIS ROOM
           </v-btn>
         </div>
@@ -119,10 +119,6 @@ export default class RootPage extends Vue {
         this.loginStatusMessages = 'invalid user name or password!'
       }
       this.loginInProgress = false
-    }
-
-    private initChatRoomStorage () {
-      appStore.INIT_MESSAGE_CONTAINER(this.chatroomToGo.trim())
     }
 }
 </script>

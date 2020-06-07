@@ -1,6 +1,5 @@
-import Vue from 'vue'
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
-import { MessageType, themeModes, AdminType, MessageContainerType, UserType } from '~/store/types/appTypes'
+import { MessageType, themeModes, AdminType, UserType } from '~/store/types/appTypes'
 import getBase64ImgPath from '~/utils/requestAvatar'
 import API from '~/api/api'
 
@@ -21,7 +20,7 @@ export default class AppStore extends VuexModule {
     }
   ]
 
-  private messages: MessageContainerType = {}
+  private messages: Array<MessageType> = []
 
   private currentChatRoomId: string = ''
 
@@ -43,18 +42,17 @@ export default class AppStore extends VuexModule {
   }
 
   @Mutation
-  CREATE_MSG ({ newMsg, chatroomID, insertPosition }: { newMsg: MessageType, chatroomID: string, insertPosition: number }) {
+  CREATE_MSG ({ newMsg, insertPosition }: { newMsg: MessageType, insertPosition: number }) {
     if (insertPosition) {
-      this.messages[`${chatroomID}`].splice(insertPosition, 0, newMsg)
+      this.messages.splice(insertPosition, 0, newMsg)
     } else {
-      this.messages[`${chatroomID}`].push(newMsg)
+      this.messages.push(newMsg)
     }
   }
 
   @Mutation
   SET_CHATROOM_ID (id: string) {
     this.currentChatRoomId = id
-    this.messages[`${id}`] = []
   }
 
   @Mutation
@@ -62,24 +60,8 @@ export default class AppStore extends VuexModule {
     this.currentUserJwtToken = jwtToken
   }
 
-  @Mutation
-  INIT_MESSAGE_CONTAINER (chatRoomId: string) {
-    Vue.set(this.messages, `${chatRoomId}`, [])
-    this.messages[`${chatRoomId}`] = []
-  }
-
-  @Action({ commit: 'INIT_MESSAGE_CONTAINER' })
-  initMessageContainer (chatRoomId: string) {
-    if (this.messages[`${chatRoomId}`]) {
-      return chatRoomId
-    }
-  }
-
   @Action({ commit: 'CREATE_MSG' })
-  async createMsg ({ newMsg, chatroomID, insertPosition }: { newMsg: MessageType, chatroomID: string, insertPosition?: (number | undefined) }) {
-    if (!this.messages[`${chatroomID}`]) {
-      this.messages[`${chatroomID}`] = []
-    }
+  async createMsg ({ newMsg, insertPosition }: { newMsg: MessageType, insertPosition?: (number | undefined) }) {
     const currentUser = this.getCurrentUser
     if (newMsg.author !== currentUser._id) {
       let otherUser = this.getOtherUsers.find(user => user._id === newMsg.author)!
@@ -90,7 +72,7 @@ export default class AppStore extends VuexModule {
         }
       }
     }
-    return { newMsg, chatroomID, insertPosition }
+    return { newMsg, insertPosition }
   }
 
   @Action({ commit: 'SET_CURRENT_USER' })
