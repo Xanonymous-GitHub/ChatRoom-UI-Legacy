@@ -104,8 +104,8 @@ module.exports = {
         'postcss-url': {},
         'postcss-nested': {},
         'postcss-responsive-type': {},
-        'postcss-hexrgba': {},
-        'postcss-scss': {}
+        'postcss-hexrgba': {}
+        // 'postcss-scss': {}
       }
     }
   },
