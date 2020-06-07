@@ -20,7 +20,7 @@ export default class AppStore extends VuexModule {
     }
   ]
 
-  private messages: MessageContainerType = { '5edb70c2db6fdff93f23d71e': [] }
+  private messages: MessageContainerType = {}
 
   private currentChatRoomId: string = ''
 

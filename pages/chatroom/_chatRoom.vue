@@ -72,6 +72,7 @@ export default class ChatRoom extends Vue {
 
     public async fetch () {
       await appStore.initMessageContainer(this.$route.params.chatRoom)
+      console.log(appStore.getMessage)
     }
 
     // step 2
@@ -119,7 +120,6 @@ export default class ChatRoom extends Vue {
 
     private async receiveNewMsg (newMsg: MessageType) {
       await appStore.createMsg({ newMsg, chatroomID: this.currentChatRoomId })
-      console.log(newMsg)
     }
 
     private sendNewMsg (newMsg: string) {
