@@ -28,8 +28,8 @@
 
 <script lang="ts">
 import { Component, Provide, Vue, Emit, Prop } from 'nuxt-property-decorator'
-import {appStore} from "~/utils/store-accessor";
-import { MessageType } from '~/store/types/appTypes';
+import { appStore } from '~/utils/store-accessor'
+import { MessageType } from '~/store/types/appTypes'
 
   @Component
 export default class MsgInput extends Vue {
