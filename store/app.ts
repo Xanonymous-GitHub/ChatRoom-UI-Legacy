@@ -77,6 +77,14 @@ export default class AppStore extends VuexModule {
     return originalData
   }
 
+  @Action({ commit: 'ADD_OTHER_USER' })
+  async addOtherUser (originalData: UserType | AdminType) {
+    if ('avatar' in originalData) {
+      originalData.avatar = await getBase64ImgPath(originalData.avatar!)
+    }
+    return originalData
+  }
+
   @Action({ commit: 'SET_CURRENT_USER_JWT_TOKEN' })
   setCurrentUserJwtToken (jwtToken: string) {
     return jwtToken

@@ -87,7 +87,7 @@ export default class API {
     }
   }
 
-  static async getHistoryMessages (chatRoomId: string, number: number, jwtToken: string, lineUserId: string, lastTime?: number): Promise<Array<MessageType> | ResponseErrorType> {
+  static async getHistoryMessages (chatRoomId: string, number: number, lastTime?: number, jwtToken?: string, lineUserId?: string): Promise<Array<MessageType> | ResponseErrorType> {
     try {
       const header: { authorization?: string, userID?: string } = {}
       if (jwtToken) {

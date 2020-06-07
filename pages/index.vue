@@ -92,7 +92,7 @@ export default class RootPage extends Vue {
       return '/chatroom/' + this.chatroomToGo
     }
 
-    public async mounted () {
+    public async beforeMount () {
       if (await adminDataFetcher()) {
         this.loginStatusMessages = ''
         this.logged = true

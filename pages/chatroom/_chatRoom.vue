@@ -61,6 +61,9 @@ export default class ChatRoom extends Vue {
     // EntryPoint, step 1
     public async validate ({ params }: { params: any }) {
       const chatRoom = (await API.getSpecifyChatRoomData(params.chatRoom)) as ChatRoomType
+      console.log(chatRoom) // TODO remove
+      console.log(!('error' in chatRoom)) // TODO remove
+      console.log((chatRoom!._id === params.chatRoom)) // TODO remove
       return !('error' in chatRoom) || (chatRoom!._id === params.chatRoom) // TODO add custom error msg
     }
 

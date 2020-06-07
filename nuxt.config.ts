@@ -31,8 +31,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [
-  ],
+  plugins: [],
   /*
   ** Nuxt.js dev-modules
   */
@@ -105,7 +104,8 @@ module.exports = {
         'postcss-url': {},
         'postcss-nested': {},
         'postcss-responsive-type': {},
-        'postcss-hexrgba': {}
+        'postcss-hexrgba': {},
+        'postcss-scss': {}
       }
     }
   },

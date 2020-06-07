@@ -47,7 +47,7 @@ export default class MsgArea extends Vue {
       } else {
         otherUser = (await API.getSpecifyAdminDataById(msgAuthor)) as unknown as AdminType
         if (otherUser) {
-          appStore.ADD_OTHER_USER(otherUser)
+          await appStore.addOtherUser(otherUser)
           return otherUser
         } else {
           return {
