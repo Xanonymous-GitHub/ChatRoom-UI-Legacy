@@ -68,6 +68,7 @@ export default class ChatRoom extends Vue {
       if (('error' in chatRoom) || (chatRoom!._id !== params.chatRoom)) {
         error({ statusCode: 404, message: 'no such chatroom exist!' })
       }
+      appStore.INIT_MESSAGE_CONTAINER(params.chatRoom)
     }
 
     // step 2
