@@ -68,7 +68,10 @@ export default class ChatRoom extends Vue {
       if (('error' in chatRoom) || (chatRoom!._id !== params.chatRoom)) {
         error({ statusCode: 404, message: 'no such chatroom exist!' })
       }
-      appStore.INIT_MESSAGE_CONTAINER(params.chatRoom)
+    }
+
+    public async fetch () {
+      await appStore.initMessageContainer(this.$route.params.chatRoom)
     }
 
     // step 2
@@ -116,6 +119,7 @@ export default class ChatRoom extends Vue {
 
     private async receiveNewMsg (newMsg: MessageType) {
       await appStore.createMsg({ newMsg, chatroomID: this.currentChatRoomId })
+      console.log(newMsg)
     }
 
     private sendNewMsg (newMsg: string) {
