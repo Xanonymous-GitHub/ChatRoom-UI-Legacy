@@ -104,7 +104,7 @@ export default class RootPage extends Vue {
       this.loginStatusMessages = ''
     }
 
-    public async created () {
+    public async beforeMount () {
       if (await adminDataFetcher()) {
         this.loginStatusMessages = ''
         await new Promise((resolve) => {
