@@ -52,7 +52,7 @@
           outlined
           required
           solo-inverted
-          @keypress.enter.prevent="getWhereToGo"
+          @keypress.enter.prevent="$router.push(getWhereToGo)"
         />
         <div class="main-field__buttons">
           <v-btn :disabled="!chatroomToGo" :to="getWhereToGo" color="primary" small>

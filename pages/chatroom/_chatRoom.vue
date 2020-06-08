@@ -139,5 +139,11 @@ export default class ChatRoom extends Vue {
         }, 100)
       }
     }
+
+    public destroyed () {
+      if (this.socket) {
+        this.socket.disconnect()
+      }
+    }
 }
 </script>
