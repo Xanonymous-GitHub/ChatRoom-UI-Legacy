@@ -62,19 +62,15 @@ export default class ChatRoom extends Vue {
       alert(e.message)
     }
 
-    // // EntryPoint, step 1
-    // public async validate ({ params }: { params: any }) {
-    //   const chatRoom = (await API.getSpecifyChatRoomData(params.chatRoom)) as any
-    //   return (!('error' in chatRoom) || (chatRoom!._id === params.chatRoom))
-    // }
-
     // step 2
     public async beforeMount () {
       // set the current chatroom identify
       appStore.SET_CHATROOM_ID(this.$route.params.chatRoom)
+      // validate the chatroom is exist or not.
       const chatRoom = (await API.getSpecifyChatRoomData(this.$route.params.chatRoom)) as any
       if (('error' in chatRoom) || (chatRoom!._id !== this.$route.params.chatRoom)) {
         alert('LOADING ERROR! this chatroom is not exist!')
+        await this.$router.push('/')
       }
     }
 

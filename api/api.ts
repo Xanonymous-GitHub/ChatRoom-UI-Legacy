@@ -1,15 +1,9 @@
-// import https from 'https'
 import axios from 'axios'
 import { ChatRoomType, MessageType, AdminType } from '~/store/types/appTypes'
 import { ResponseErrorType } from '~/store/types/apiTypes'
 
-// const agent = new https.Agent({
-//   rejectUnauthorized: false
-// })
-
 axios.defaults.baseURL = '/api'
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
-// axios.defaults.httpsAgent = agent
 
 export default class API {
   static async getSpecifyChatRoomData (chatRoomId: string): Promise<ChatRoomType | ResponseErrorType> {
@@ -17,7 +11,6 @@ export default class API {
       const { data } = await axios.get(`/chatrooms/${chatRoomId}`)
       return data
     } catch (e) {
-      console.log(e)
       const status = e.response
       return { error: status }
     }
