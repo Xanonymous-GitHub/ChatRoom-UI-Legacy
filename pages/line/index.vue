@@ -6,7 +6,7 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component({})
-export default class Line extends Vue {
+export default class LineHomePage extends Vue {
 
 }
 </script>
