@@ -2,7 +2,7 @@ import axios from 'axios'
 import { ChatRoomType, MessageType, AdminType } from '~/store/types/appTypes'
 import { ResponseErrorType } from '~/store/types/apiTypes'
 
-axios.defaults.baseURL = '/api'
+axios.defaults.baseURL = 'https://mrcoding.org/api'
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
 
 export default class API {
