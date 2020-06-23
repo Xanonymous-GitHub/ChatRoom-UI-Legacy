@@ -7,11 +7,11 @@
       <v-form ref="form" v-model="valid">
         <div v-if="!logged" class="main-field__login-field">
           <v-text-field
-            v-model="username"
             :disabled="loginInProgress"
             :rules="loginRules"
             dense
             label="username"
+            v-model="username"
             outlined
             required
             solo-inverted
@@ -19,13 +19,13 @@
             @keypress.enter.prevent="login"
           />
           <v-text-field
-            v-model="password"
             :disabled="loginInProgress"
             :rules="loginRules"
             dense
             label="password"
             outlined
             required
+            v-model="password"
             solo-inverted
             type="password"
             @input="startInput"
@@ -46,13 +46,13 @@
       </v-form>
       <div v-if="logged" class="main-field__chatroom-selection-field">
         <v-text-field
-          v-model="chatroomToGo"
           dense
+          v-model="chatroomToGo"
           label="chatroom ID"
           outlined
           required
           solo-inverted
-          @keypress.enter.prevent="$router.push(getWhereToGo)"
+          @keypress.enter.prevent="chatroomToGo.trim()&&$router.push(getWhereToGo)"
         />
         <div class="main-field__buttons">
           <v-btn :disabled="!chatroomToGo" :to="getWhereToGo" color="primary" small>
@@ -100,10 +100,6 @@ export default class RootPage extends Vue {
       return '/chatroom/' + this.chatroomToGo.trim()
     }
 
-    private startInput () {
-      this.loginStatusMessages = ''
-    }
-
     public async beforeMount () {
       if (await adminDataFetcher()) {
         this.loginStatusMessages = ''
@@ -112,6 +108,10 @@ export default class RootPage extends Vue {
           resolve()
         })
       }
+    }
+
+    private startInput () {
+      this.loginStatusMessages = ''
     }
 
     private async login () {
