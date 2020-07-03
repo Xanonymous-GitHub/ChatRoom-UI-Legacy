@@ -2,6 +2,7 @@
 
 module.exports = {
   mode: 'universal',
+  target: 'static',
   /*
   ** Headers of the page
   */
