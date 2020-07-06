@@ -1,20 +1,23 @@
 language: node_js
 node_js:
-  - "node"
+- node
 branches:
   only:
-    - master
+  - master
 before_install:
-  - echo "$SSH_TOKEN" >> ~/.ssh/id_rsa
-  - echo -e "Host mrcoding.org\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+- openssl aes-256-cbc -K $encrypted_1f9563912a12_key -iv $encrypted_1f9563912a12_iv
+  -in id_rsa.enc -out ~\/.ssh/id_rsa -d
+- chmod 600 ~/.ssh/id_rsa
+- echo -e "Host mrcoding.org\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 script:
-  - npm run build
-  - npm run export
+- npm run build
+- npm run export
 after_success:
-  - npm prune --production
-  - rm -rf ./node_modules
-  - rm -f ./.*
-  - tar -jcf indoor-server.tar.bz2 *
-  - scp indoor-server.tar.bz2 xanonymous@mrcoding.org:~/
-  - ssh xanonymous@mrcoding.org 'mkdir -p NPC-Mr.Coding-ChatRoom-UI && tar -jxf indoor-server.tar.bz2 -C NPC-Mr.Coding-ChatRoom-UI && rm -rf ~/indoor-server.tar.bz2'
-  - ssh xanonymous@mrcoding.org 'cd NPC-Mr.Coding-ChatRoom-UI && pm2 startOrReload'
+- npm prune --production
+- rm -rf ./node_modules
+- rm -f ./.*
+- tar -jcf indoor-server.tar.bz2 *
+- scp indoor-server.tar.bz2 xanonymous@mrcoding.org:~/
+- ssh xanonymous@mrcoding.org 'mkdir -p NPC-Mr.Coding-ChatRoom-UI && tar -jxf indoor-server.tar.bz2
+  -C NPC-Mr.Coding-ChatRoom-UI && rm -rf ~/indoor-server.tar.bz2'
+- ssh xanonymous@mrcoding.org 'cd NPC-Mr.Coding-ChatRoom-UI && pm2 startOrReload'
