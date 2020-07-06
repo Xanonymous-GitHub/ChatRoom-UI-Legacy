@@ -26,6 +26,13 @@ export default class AppStore extends VuexModule {
 
   private currentUserJwtToken: string = ''
 
+  private static async newUser (originalData: UserType | AdminType) {
+    if (originalData && 'avatar' in originalData && originalData.avatar) {
+      originalData.avatar = await getBase64ImgPath(originalData.avatar!)
+    }
+    return originalData
+  }
+
   @Mutation
   SET_THEME_MODE (mode: themeModes) {
     this.themeMode = mode
@@ -77,18 +84,12 @@ export default class AppStore extends VuexModule {
 
   @Action({ commit: 'SET_CURRENT_USER' })
   async setCurrentUser (originalData: UserType | AdminType) {
-    if (originalData && 'avatar' in originalData && originalData.avatar) {
-      originalData.avatar = await getBase64ImgPath(originalData.avatar!)
-    }
-    return originalData
+    return await AppStore.newUser(originalData)
   }
 
   @Action({ commit: 'ADD_OTHER_USER' })
   async addOtherUser (originalData: UserType | AdminType) {
-    if (originalData && 'avatar' in originalData && originalData.avatar) {
-      originalData.avatar = await getBase64ImgPath(originalData.avatar!)
-    }
-    return originalData
+    return await AppStore.newUser(originalData)
   }
 
   @Action({ commit: 'SET_CURRENT_USER_JWT_TOKEN' })

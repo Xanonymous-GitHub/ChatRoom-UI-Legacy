@@ -1,13 +1,7 @@
-// const colors = require('vuetify/es5/util/colors').default
-
 module.exports = {
   mode: 'universal',
   target: 'static',
-  /*
-  ** Headers of the page
-  */
   head: {
-    // titleTemplate: '%s - ' + process.env.npm_package_name,
     title: 'Mr.Coding',
     meta: [
       { charset: 'utf-8' },
@@ -18,47 +12,22 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  /*
-  ** Customize the progress-bar color
-  */
   loading: {
-    color: 'blue',
+    color: 'green',
     height: '5px'
   },
-  /*
-  ** Global CSS
-  */
   css: ['~/assets/scss/app.scss'],
-  /*
-  ** Plugins to load before mounting the App
-  */
   plugins: [],
-  /*
-  ** Nuxt.js dev-modules
-  */
   buildModules: [
     '@nuxt/typescript-build',
     '@nuxtjs/vuetify'
   ],
-  /*
-  ** Nuxt.js modules
-  */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    // '@nuxtjs/axios',
     '~/io'
   ],
-  /*
-  ** Axios module configuration
-  ** See https://axios.nuxtjs.org/options
-  */
-  axios: {},
-  /*
-  ** vuetify module configuration
-  ** https://github.com/nuxt-community/vuetify-module
-  */
   vuetify: {
     customVariables: ['~/assets/scss/shared/variables.scss'],
+    maxChunkSize: 10000,
     theme: {
       dark: false,
       default: 'light',
@@ -90,18 +59,27 @@ module.exports = {
         }
       }
     }
-    /*
-    ** Build configuration
-    */
   },
   build: {
+    // analyze: true,
     extractCSS: true,
+    sourceMap: false,
+    cssSourceMap: false,
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+        automaticNameDelimiter: '.',
+        name: true,
+        cacheGroups: {},
+        maxSize: 50000
+      }
+    },
+    maxChunkSize: 50000,
     transpile: [
       /typed-vuex/
     ],
     postcss: {
       plugins: {
-        // Disable a plugin by passing false as value
         'postcss-url': {},
         'postcss-nested': {},
         'postcss-responsive-type': {},
