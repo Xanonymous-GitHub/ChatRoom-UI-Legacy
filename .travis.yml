@@ -20,5 +20,6 @@ after_success:
   && tar -jxf indoor-server.tar.bz2 -C NPC-Mr.Coding-ChatRoom-UI
   && rm -rf ~/indoor-server.tar.bz2
   && cd NPC-Mr.Coding-ChatRoom-UI
+  && echo "#!/bin/bash\npm2 startOrReload" >> deploy.sh
   && sh deploy.sh
   '
