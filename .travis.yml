@@ -10,14 +10,15 @@ before_install:
 - chmod 600 ~/.ssh/id_rsa
 - echo -e "Host mrcoding.org\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 script:
-- npm run lint --fix
+- npm run build
+- npm run export
 after_success:
-- npm prune --production
-- tar -jcf indoor-server.tar.bz2 *
+- tar -jcf indoor-server.tar.bz2 ./dist ./.nuxt
 - scp indoor-server.tar.bz2 xanonymous@mrcoding.org:~/
-- ssh xanonymous@mrcoding.org
-- mkdir -p NPC-Mr.Coding-ChatRoom-UI
-- tar -jxf indoor-server.tar.bz2 -C NPC-Mr.Coding-ChatRoom-UI
-- rm -rf ~/indoor-server.tar.bz2
-- cd NPC-Mr.Coding-ChatRoom-UI
-- pm2 startOrReload
+- ssh xanonymous@mrcoding.org '
+  mkdir -p NPC-Mr.Coding-ChatRoom-UI
+  && tar -jxf indoor-server.tar.bz2 -C NPC-Mr.Coding-ChatRoom-UI
+  && rm -rf ~/indoor-server.tar.bz2
+  && cd NPC-Mr.Coding-ChatRoom-UI
+  && sh deploy.sh
+  '
