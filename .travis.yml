@@ -13,7 +13,7 @@ script:
 - npm run build
 - npm run export
 after_success:
-- tar -jcf indoor-server.tar.bz2 ./dist ./.nuxt
+- tar -jcf indoor-server.tar.bz2 ./dist ./.nuxt ecosystem.config.js
 - scp indoor-server.tar.bz2 xanonymous@mrcoding.org:~/
 - ssh xanonymous@mrcoding.org '
   rm -rf ~/NPC-Mr.Coding-ChatRoom-UI
