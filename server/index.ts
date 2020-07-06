@@ -19,7 +19,7 @@ async function start () {
   }
   app.use(nuxt.render)
   server.listen(port, function () {
-    console.log('Express server listening on port ' + port)
+    // console.log(port)
   })
 }
 

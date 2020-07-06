@@ -8,6 +8,7 @@ export enum themeModes {
 }
 
 export interface MessageType {
+  _v?: any // unknown thing
   _id: string, // mongoose id, absolutely unique
   author: string, // user's [_id]
   read: boolean, // show that if this is read by someone (the other user in same chatRoom)
@@ -18,11 +19,14 @@ export interface MessageType {
 }
 
 export interface UserType {
-  _id: string, // mongoose id, absolutely unique
+  _id: string // line uuid or admin's mongo id.
+}
+
+export interface AdminType extends UserType {
   username: string, // admins' self-set name, or the line uuid of general users
   avatar?: string, // user avatar url(at the first time) => base64 path TODO avatar = await getBase64ImgPath(avatarUrl)
   info?: string, // user profile
-  verified: boolean // show that if the user is verified by us(dev team)
+  cc: boolean // show that if the user is verified by us(dev team)
 }
 
 export interface ChatRoomType {

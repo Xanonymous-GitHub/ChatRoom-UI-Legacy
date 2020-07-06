@@ -1,0 +1,25 @@
+language: node_js
+node_js:
+- node
+branches:
+  only:
+  - master
+before_install:
+- openssl aes-256-cbc -K $encrypted_1f9563912a12_key -iv $encrypted_1f9563912a12_iv
+  -in id_rsa.enc -out ~/.ssh/id_rsa -d
+- chmod 600 ~/.ssh/id_rsa
+- echo -e "Host mrcoding.org\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+script:
+- npm run build
+- npm run export
+after_success:
+- tar -jcf indoor-server.tar.bz2 ./dist ./.nuxt ecosystem.config.js
+- scp indoor-server.tar.bz2 xanonymous@mrcoding.org:~/
+- ssh xanonymous@mrcoding.org '
+  rm -rf ~/NPC-Mr.Coding-ChatRoom-UI
+  && mkdir -p NPC-Mr.Coding-ChatRoom-UI
+  && tar -jxf indoor-server.tar.bz2 -C NPC-Mr.Coding-ChatRoom-UI
+  && rm -rf ~/indoor-server.tar.bz2
+  && cd NPC-Mr.Coding-ChatRoom-UI
+  && pm2 start
+  '

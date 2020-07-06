@@ -14,21 +14,21 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import getTime from '~/utils/getTime'
+import formatter from '~/utils/timeFormater'
 
-@Component({})
+  @Component({})
 export default class MsgStatus extends Vue {
-  @Prop({ required: true })
-  private sentTime!: number;
+    @Prop({ required: true })
+    private sentTime!: number;
 
-  @Prop({ required: true })
-  private read!: boolean;
+    @Prop({ required: true })
+    private read!: boolean;
 
-  @Prop({ required: true })
-  private sentBySelf!: boolean;
+    @Prop({ required: true })
+    private sentBySelf!: boolean;
 
-  private get getFormattedSentTime () {
-    return getTime(this.sentTime)
-  }
+    private get getFormattedSentTime () {
+      return formatter(this.sentTime)
+    }
 }
 </script>

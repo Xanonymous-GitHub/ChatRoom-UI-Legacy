@@ -16,6 +16,10 @@
     margin: auto;
   }
 
+  &__chatroom-selection-field {
+    @extend .main-field__login-field;
+  }
+
   &__buttons {
     display: inline-block;
   }

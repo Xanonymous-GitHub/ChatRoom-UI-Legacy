@@ -1,3 +1,3 @@
 export interface ResponseErrorType {
-  error:any
+  error: any
 }

@@ -1,50 +1,37 @@
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
-import { MessageType, themeModes, UserType, MessageContainerType } from '~/store/types/appTypes'
-import uuid from '~/utils/uuid'
+import { MessageType, themeModes, AdminType, UserType, MessageContainerType } from '~/store/types/appTypes'
+import getBase64ImgPath from '~/utils/requestAvatar'
+import API from '~/api/api'
 
 @Module({ name: 'app', stateFactory: true, namespaced: true })
 export default class AppStore extends VuexModule {
   private themeMode = themeModes.AUTO;
 
-  private currentUser: UserType =
-    {
-      _id: 'TeuId',
-      username: 'TeU',
-      verified: false,
-      avatar: 'https://cdn.vuetifyjs.com/images/profiles/marcus.jpg' // should be a base64
-    }
+  private currentUser: AdminType | UserType = {
+    _id: ''
+  }
 
-  private otherUsers: Array<UserType> = [
+  private otherUsers: Array<AdminType | UserType> = [
     {
-      _id: 'XanonymousId',
-      username: 'Xanonymous',
-      verified: false,
-      avatar: 'https://cdn.vuetifyjs.com/images/profiles/marcus.jpg' // should be a base64
+      _id: '',
+      username: '',
+      cc: false,
+      avatar: ''
     }
   ]
 
-  private messages: MessageContainerType = {
-    abc: [
-      {
-        _id: '123',
-        author: 'XanonymousId',
-        read: false,
-        updateAt: 1591029484912,
-        context: 'this is a test message from xanonymous in room 123',
-        chatroomID: 'abc'
-      },
-      {
-        _id: '456',
-        author: 'TeuId',
-        read: true,
-        updateAt: 1591029503976,
-        context: 'this is also a test message from Teu in room 123',
-        chatroomID: 'abc'
-      }
-    ]
-  }
+  private messages: MessageContainerType = { chatroom: [] }
 
-  private currentChatRoomIdentify: string = ''
+  private currentChatRoomId: string = ''
+
+  private currentUserJwtToken: string = ''
+
+  private static async newUser (originalData: UserType | AdminType) {
+    if (originalData && 'avatar' in originalData && originalData.avatar) {
+      originalData.avatar = await getBase64ImgPath(originalData.avatar!)
+    }
+    return originalData
+  }
 
   @Mutation
   SET_THEME_MODE (mode: themeModes) {
@@ -52,23 +39,62 @@ export default class AppStore extends VuexModule {
   }
 
   @Mutation
-  CREATE_MSG ({ newMsg, chatroomID, insertPosition }: { newMsg: MessageType, chatroomID: string, insertPosition: number }) {
+  SET_CURRENT_USER (originalData: UserType | AdminType) {
+    this.currentUser = originalData
+  }
+
+  @Mutation
+  ADD_OTHER_USER (otherUser: UserType | AdminType) {
+    this.otherUsers.push(otherUser)
+  }
+
+  @Mutation
+  CREATE_MSG ({ newMsg, insertPosition }: { newMsg: MessageType, insertPosition: number }) {
     if (insertPosition) {
-      this.messages[`${chatroomID}`].splice(insertPosition, 0, newMsg)
+      this.messages.chatroom.splice(insertPosition, 0, newMsg)
     } else {
-      this.messages[`${chatroomID}`].push(newMsg)
+      this.messages.chatroom.push(newMsg)
     }
   }
 
   @Mutation
-  SET_CHATROOM_IDENTIFY (identify: string) {
-    this.currentChatRoomIdentify = identify
+  SET_CHATROOM_ID (id: string) {
+    this.currentChatRoomId = id
+  }
+
+  @Mutation
+  SET_CURRENT_USER_JWT_TOKEN (jwtToken: string) {
+    this.currentUserJwtToken = jwtToken
   }
 
   @Action({ commit: 'CREATE_MSG' })
-  createMsg ({ newMsg, chatroomID, insertPosition }: { newMsg: MessageType, chatroomID: string, insertPosition?: (number | undefined) }) {
-    newMsg._id = uuid() // actually from TODO -> server.
-    return { newMsg, chatroomID, insertPosition }
+  async createMsg ({ newMsg, insertPosition }: { newMsg: MessageType, insertPosition?: (number | undefined) }) {
+    const currentUser = this.getCurrentUser
+    if (newMsg.author !== currentUser._id) {
+      let otherUser = this.getOtherUsers.find(user => user._id === newMsg.author)!
+      if (!otherUser) {
+        otherUser = (await API.getSpecifyAdminDataById(newMsg.author)) as unknown as AdminType
+        if (otherUser) {
+          await this.addOtherUser(otherUser)
+        }
+      }
+    }
+    return { newMsg, insertPosition }
+  }
+
+  @Action({ commit: 'SET_CURRENT_USER' })
+  async setCurrentUser (originalData: UserType | AdminType) {
+    return await AppStore.newUser(originalData)
+  }
+
+  @Action({ commit: 'ADD_OTHER_USER' })
+  async addOtherUser (originalData: UserType | AdminType) {
+    return await AppStore.newUser(originalData)
+  }
+
+  @Action({ commit: 'SET_CURRENT_USER_JWT_TOKEN' })
+  setCurrentUserJwtToken (jwtToken: string) {
+    return jwtToken
   }
 
   get isDarkMode () {
@@ -87,7 +113,11 @@ export default class AppStore extends VuexModule {
     return this.otherUsers
   }
 
-  get getCurrentChatRoomIdentify () {
-    return this.currentChatRoomIdentify
+  get getCurrentChatRoomId () {
+    return this.currentChatRoomId
+  }
+
+  get getJwtKey () {
+    return this.currentUserJwtToken
   }
 }

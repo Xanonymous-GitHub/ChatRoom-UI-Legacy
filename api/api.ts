@@ -1,18 +1,17 @@
-import Vue from 'vue'
 import axios from 'axios'
-import { ChatRoomType, MessageType, UserType } from '~/store/types/appTypes'
+import { ChatRoomType, MessageType, AdminType } from '~/store/types/appTypes'
 import { ResponseErrorType } from '~/store/types/apiTypes'
 
-axios.defaults.baseURL = '/api'
+axios.defaults.baseURL = 'https://mrcoding.org/api'
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
 
-class API {
-  static async getSpecifyChatRoomsData (chatRoomId: string): Promise<ChatRoomType | ResponseErrorType> {
+export default class API {
+  static async getSpecifyChatRoomData (chatRoomId: string): Promise<ChatRoomType | ResponseErrorType> {
     try {
       const { data } = await axios.get(`/chatrooms/${chatRoomId}`)
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       return { error: status }
     }
   }
@@ -21,12 +20,12 @@ class API {
     try {
       const { data } = await axios.get('/chatrooms', {
         headers: {
-          Authorization: 'bearer ' + jwtToken
+          authorization: 'bearer ' + jwtToken
         }
       })
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       return { error: status }
     }
   }
@@ -37,12 +36,12 @@ class API {
         identify
       }, {
         headers: {
-          Authorization: uniqueToken
+          authorization: uniqueToken
         }
       })
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       if (status === 400) {
         return { error: 'duplicate room id' + status }
       }
@@ -56,12 +55,12 @@ class API {
         lineAccessToken
       }, {
         headers: {
-          Authorization: lineUserId
+          authorization: lineUserId
         }
       })
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       if (status === 404) {
         return { error: 'could not find the chatRoom' + status }
       }
@@ -75,12 +74,12 @@ class API {
         closed
       }, {
         headers: {
-          Authorization: 'bearer ' + jwtToken
+          authorization: 'bearer ' + jwtToken
         }
       })
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       if (status === 404) {
         return { error: 'chatRoom not found' + status }
       }
@@ -88,11 +87,11 @@ class API {
     }
   }
 
-  static async getHistoryMessages (chatRoomId: string, number: number, jwtToken: string, lineUserId: string, lastTime?: number): Promise<Array<MessageType> | ResponseErrorType> {
+  static async getHistoryMessages (chatRoomId: string, number: number, lastTime?: number, jwtToken?: string, lineUserId?: string): Promise<Array<MessageType> | ResponseErrorType> {
     try {
-      const header: { Authorization?: string, userID?: string } = {}
+      const header: { authorization?: string, userID?: string } = {}
       if (jwtToken) {
-        header.Authorization = 'bearer ' + jwtToken
+        header.authorization = 'bearer ' + jwtToken
       } else if (lineUserId) {
         header.userID = lineUserId
       }
@@ -107,7 +106,7 @@ class API {
       })
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       return { error: status }
     }
   }
@@ -120,47 +119,61 @@ class API {
       })
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       return { error: status }
     }
   }
 
-  static async getSpecifyAdminData (UserId: string): Promise<UserType | ResponseErrorType> {
+  static async getSpecifyAdminDataById (UserId: string): Promise<AdminType | ResponseErrorType> {
     try {
       const { data } = await axios.get(`/users/${UserId}`)
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       return { error: status }
     }
   }
 
-  static async getAllAdminsData (jwtToken: string): Promise<Array<UserType> | ResponseErrorType> {
+  static async getSpecifyAdminDataByJwtToken (jwtToken: string): Promise<AdminType | ResponseErrorType> {
     try {
-      const { data } = await axios.get('/users', {
+      const { data } = await axios.get('/me', {
         headers: {
-          Authorization: 'bearer ' + jwtToken
+          authorization: 'bearer ' + jwtToken
         }
       })
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       return { error: status }
     }
   }
 
-  static async setAdminInfo (userId: string, info: string, jwtToken: string): Promise<UserType | ResponseErrorType> {
+  static async getAllAdminsData (jwtToken: string): Promise<Array<AdminType> | ResponseErrorType> {
+    try {
+      const { data } = await axios.get('/users', {
+        headers: {
+          authorization: 'bearer ' + jwtToken
+        }
+      })
+      return data
+    } catch (e) {
+      const status = e.response
+      return { error: status }
+    }
+  }
+
+  static async setAdminInfo (userId: string, info: string, jwtToken: string): Promise<AdminType | ResponseErrorType> {
     try {
       const { data } = await axios.patch(`/users/${userId}/info`, {
         info
       }, {
         headers: {
-          Authorization: 'bearer ' + jwtToken
+          authorization: 'bearer ' + jwtToken
         }
       })
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       if (status === 400) {
         return { error: 'cross-user-access denied.' + status }
       }
@@ -168,7 +181,7 @@ class API {
     }
   }
 
-  static async setAdminAvatar (userId: string, avatar: string, jwtToken: string): Promise<UserType | ResponseErrorType> {
+  static async setAdminAvatar (userId: string, avatar: string, jwtToken: string): Promise<AdminType | ResponseErrorType> {
     try {
       const { data } = await axios.patch(`/users/${userId}/avatar`, {
         avatar
@@ -179,7 +192,7 @@ class API {
       })
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       if (status === 400) {
         return { error: 'cross-user-access denied.' + status }
       }
@@ -187,7 +200,7 @@ class API {
     }
   }
 
-  static async setAdminValidation (userId: string, cc: string, jwtToken: string): Promise<UserType | ResponseErrorType> {
+  static async setAdminValidation (userId: string, cc: string, jwtToken: string): Promise<AdminType | ResponseErrorType> {
     try {
       const { data } = await axios.patch(`/users/${userId}/cc`, {
         cc
@@ -198,7 +211,7 @@ class API {
       })
       return data
     } catch (e) {
-      const status = e.response.status
+      const status = e.response
       if (status === 400) {
         return { error: 'cross-user-access denied.' + status }
       }
@@ -206,5 +219,3 @@ class API {
     }
   }
 }
-
-Vue.prototype.$api = API
